@@ -9,7 +9,7 @@ import java.io.*;
 public class WorldGen											 
 {
  
-	JFrame frame=new JFrame(); //creates frame
+	JFrame frame=new JFrame("Universe"); //creates frame
     JButton[][] grid; //names the grid of buttons
     JPanel ButtonPane = new JPanel();
 
@@ -50,6 +50,7 @@ public class WorldGen
     
     public void setTile(int x_val, int y_val)
     {
+    	
     	
     }
     public static void main(String[] args) 
