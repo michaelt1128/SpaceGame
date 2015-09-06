@@ -13,5 +13,6 @@ public class GameDriver
 		p1.setName(sc.next());
 		//Displaying player name
 		System.out.println("Player Name: " + p1.getName());
+		//test
 	}
 }
