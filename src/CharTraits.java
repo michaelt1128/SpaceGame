@@ -1,9 +1,9 @@
 
 public class CharTraits 
 {
-	public int health = 100;
-	public int stamina = 100;
-	public int attack = 5;
+	public int health;
+	public int stamina;
+	public int attack;
 	public String name = null;
 	
 	public int getHealth()

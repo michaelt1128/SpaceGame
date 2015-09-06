@@ -2,7 +2,8 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.GridLayout;
  
-public class WorldGen 
+public class WorldGen extends WorldOptions //extends the WorldOptions so that it can place the locations of the
+											//worlds on the plot 
 {
  
 	JFrame frame=new JFrame(); //creates frame
