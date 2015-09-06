@@ -20,5 +20,7 @@ public class GameDriver
 		planet1.setPortNames(portNames);
 		System.out.println(planet1.getPortNames());
 		
+		WorldGen universe = new WorldGen(10,10);
+
 	}
 }
