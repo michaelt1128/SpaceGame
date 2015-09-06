@@ -1,3 +1,4 @@
+package gameTest;
 import java.util.ArrayList;
 
 public class Player extends CharTraits 
