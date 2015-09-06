@@ -15,12 +15,13 @@ public class GameDriver
 		portNames.add("Washington");
 		portNames.add("Moscow");
 		
-		WorldOptions planet1 = new WorldOptions();
+		PlanetGen planet1 = new PlanetGen();
 		planet1.setWorldName("Earth");
 		planet1.setPortNames(portNames);
 		System.out.println(planet1.getPortNames());
 		
 		WorldGen universe = new WorldGen(10,10);
+		universe.setTile(2, 2);
 
 	}
 }

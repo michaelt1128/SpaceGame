@@ -1,16 +1,36 @@
 import javax.swing.JFrame;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
  
-public class WorldGen extends WorldOptions //extends the WorldOptions so that it can place the locations of the
-											//worlds on the plot 
+public class WorldGen											 
 {
  
 	JFrame frame=new JFrame(); //creates frame
-        
     JButton[][] grid; //names the grid of buttons
+    /**public BufferedImage kappaIcon = loadBufferedImage("/Kappa.jpg");
+    
+    private BufferedImage loadBufferedImage(String string)
+    {
+    	try
+    	{
+    		BufferedImage bi = ImageIO.read(this.getClass().getResource(string));
+    		return bi;
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
+    	return null;
+    }**/
 
     public WorldGen(int width, int length) //constructor
     { 
@@ -32,7 +52,16 @@ public class WorldGen extends WorldOptions //extends the WorldOptions so that it
     
     public void setTile(int x_val, int y_val)
     {
-    	
+    	try
+    	{
+    		BufferedImage image = null;
+    		image = ImageIO.read(WorldGen.class.getResource("/images/Kappa.jpg"));    	
+    		grid[x_val][y_val]=new JButton(new ImageIcon(image));
+    	}
+    	catch(IOException e)
+    	{
+    		e.printStackTrace();
+    	}
     }
     public static void main(String[] args) 
     {
