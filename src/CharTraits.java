@@ -1,37 +1,10 @@
+import java.util.ArrayList;
+
 
 public class CharTraits 
 {
-	public int health;
-	public int stamina;
-	public int attack;
-	public String name = null;
-	
-	public int getHealth()
-	{
-		return health;
-	}
-	public void setHealth(int hp)
-	{
-		health = hp;
-	}
-	
-	public int getStamina()
-	{
-		return stamina;
-	}
-	public void setStamina(int stm)
-	{
-		stamina = stm;
-	}
-	
-	public int getAttack()
-	{
-		return attack;
-	}
-	public void setAttack(int attk)
-	{
-		attack = attk;
-	}
+	public ArrayList<Integer> stats;
+	public String name;
 	
 	public String getName()
 	{
@@ -40,6 +13,14 @@ public class CharTraits
 	public void setName(String n)
 	{
 		name = n;
+	}
+	public ArrayList<Integer> getStats()
+	{
+		return stats;
+	}
+	public void setStats(ArrayList<Integer> s)
+	{
+		stats = s;
 	}
 	
 }
