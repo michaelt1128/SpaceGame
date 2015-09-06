@@ -14,7 +14,7 @@ public class SpaceBattle
 				eStats.set(0,eStats.get(0) - pStats.get(2));
 			}
 			System.out.println(eStats.get(0));
-			eStats.set(0,0);
+			eStats.set(0,0); // exits the loop
 		}
 	}
 }
