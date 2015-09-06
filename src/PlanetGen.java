@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
-
-public class WorldOptions 
+public class PlanetGen
 {	
 	public String worldName;
 	public ArrayList<String> portNames;
