@@ -3,27 +3,17 @@ import java.util.ArrayList;
 
 public class ShipTraits 
 {
-	public int shields = 100;
-	public int armor;
 	public String name;
 	public ArrayList<String> cargo;
+	public ArrayList<Integer> shipStats;
 	
-	public int getShield()
+	public ArrayList<Integer> getShipStats()
 	{
-		return shields;
+		return shipStats;
 	}
-	public void setShields(int sh)
+	public void setShipStats(ArrayList<Integer> sS)
 	{
-		shields = sh;
-	}
-	
-	public int getArmor()
-	{
-		return armor;
-	}
-	public void setArmor(int a)
-	{
-		armor = a;
+		shipStats = sS;
 	}
 	public String getName()
 	{

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class CharTraits 
 {
-	public ArrayList<Integer> stats;
+	public ArrayList<Integer> stats; //Health,Attack,Stamina,money,accuracy 
 	public String name;
 	
 	public String getName()
