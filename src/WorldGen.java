@@ -1,47 +1,44 @@
-import javax.swing.JFrame;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import java.io.*;
  
 public class WorldGen											 
 {
  
 	JFrame frame=new JFrame(); //creates frame
     JButton[][] grid; //names the grid of buttons
-    /**public BufferedImage kappaIcon = loadBufferedImage("/Kappa.jpg");
-    
-    private BufferedImage loadBufferedImage(String string)
-    {
-    	try
-    	{
-    		BufferedImage bi = ImageIO.read(this.getClass().getResource(string));
-    		return bi;
-    	}
-    	catch(IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    	return null;
-    }**/
+    JPanel ButtonPane = new JPanel();
 
+    
     public WorldGen(int width, int length) //constructor
     { 
-    	frame.setLayout(new GridLayout(width,length)); //set layout
+    	frame.setLayout(new GridLayout(width, length)); //set layout
+    	frame.setBackground(Color.BLACK);
+    	frame.setPreferredSize(new Dimension(600, 600));
         grid=new JButton[width][length]; //allocate the size of grid
+        
         for(int y=0; y<length; y++)
         {
          	for(int x=0; x<width; x++)
           	{
           		grid[x][y]=new JButton(""); //creates new button
           		grid[x][y].setPreferredSize(new Dimension(40,40));
+          		grid[x][y].setBackground(Color.blue);
+          		//ButtonPane.add(grid[x][y]);
+          		try
+            	{
+            		BufferedImage image = null;
+            		image = ImageIO.read(WorldGen.class.getResource("/images/Kappa.jpg"));    	
+            		grid[x][y].setIcon(new ImageIcon(image));
+            		frame.setVisible(true);
+            	}
+            	catch(IOException e)
+            	{
+            		e.printStackTrace();
+            	}
           		frame.add(grid[x][y]); //adds button to grid
             }
         }
@@ -52,16 +49,7 @@ public class WorldGen
     
     public void setTile(int x_val, int y_val)
     {
-    	try
-    	{
-    		BufferedImage image = null;
-    		image = ImageIO.read(WorldGen.class.getResource("/images/Kappa.jpg"));    	
-    		grid[x_val][y_val]=new JButton(new ImageIcon(image));
-    	}
-    	catch(IOException e)
-    	{
-    		e.printStackTrace();
-    	}
+    	
     }
     public static void main(String[] args) 
     {
