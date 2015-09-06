@@ -6,7 +6,7 @@ public class SpaceBattle
 	{
 		while(pStats.get(0) > 0 && eStats.get(0) > 0)
 		{
-			
+			Scanner sc = new Scanner(System.in);
 		}
 	}
 }

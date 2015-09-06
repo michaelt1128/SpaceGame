@@ -27,7 +27,7 @@ public class WorldGen
           		grid[x][y]=new JButton(""); //creates new button
           		grid[x][y].setPreferredSize(new Dimension(40,40));
           		grid[x][y].setBackground(Color.blue);
-          		//ButtonPane.add(grid[x][y]);
+
           		try
             	{
             		BufferedImage image = null;
