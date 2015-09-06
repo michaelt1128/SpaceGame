@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class PlanetGen
 {	
-	public String worldName;
+	public String PlanetName;
 	public ArrayList<String> portNames;
 	public ArrayList<String> shops;
 	public ArrayList<String> shopList;
@@ -19,13 +19,13 @@ public class PlanetGen
 		planetCoords = pC;
 	}
 	
-	public String getWorldName()
+	public String getPlanetName()
 	{
-		return worldName;
+		return PlanetName;
 	}
-	public void setWorldName(String wN)
+	public void setPlanetName(String wN)
 	{
-		worldName = wN;
+		PlanetName = wN;
 	}
 	
 	public ArrayList<String> getPortNames()
