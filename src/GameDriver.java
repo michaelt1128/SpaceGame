@@ -1,27 +1,26 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Scanner;
 
 
 public class GameDriver 
-{
+{	
 	public static boolean gameState = true;
 	
 	public static void main(String[] args)
 	{
+		ArrayList<Integer> p1 = new ArrayList<>();
+		ArrayList<Integer> e1 = new ArrayList<>();
 		System.out.println("*****-------Welcome to SpaceGame-------*****");
-		GameDriver game = new GameDriver();
+		SpaceBattle b1 = new SpaceBattle();
 		
-		ArrayList<String> portNames = new ArrayList<String>();
-		portNames.add("Washington");
-		portNames.add("Moscow");
+		p1.add(100);
+		p1.add(100);
+		p1.add(50);
+		e1.add(100);
+		e1.add(100);
+		e1.add(50);
 		
-		PlanetGen planet1 = new PlanetGen();
-		planet1.setWorldName("Earth");
-		planet1.setPortNames(portNames);
-		System.out.println(planet1.getPortNames());
-		
-		WorldGen universe = new WorldGen(10,10);
-		universe.setTile(2, 2);
+		b1.startBattle(p1,e1);
 
 	}
 }
