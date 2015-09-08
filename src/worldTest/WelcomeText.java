@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class WelcomeText 
 {
-	public WelcomeText()
+	public WelcomeText(WorldGen world, int x_max, int y_max)
 	{
 		JFrame frame = new JFrame("SPACE GAME");
 		frame.setBackground(Color.YELLOW);
@@ -36,8 +36,9 @@ public class WelcomeText
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				WorldGen w = new WorldGen(10,10);
+				new WorldGen(x_max, y_max);
 				frame.dispose();
+				//w.setTile(2, 2);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
