@@ -2,7 +2,6 @@ package worldTest;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +10,7 @@ import javax.swing.*;
 
 public class WelcomeText 
 {
-	public WelcomeText(WorldGen world, int x_max, int y_max)
+	public WelcomeText(int x_max, int y_max)
 	{
 		JFrame frame = new JFrame("SPACE GAME");
 		frame.setBackground(Color.YELLOW);
@@ -36,13 +35,18 @@ public class WelcomeText
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				new WorldGen(x_max, y_max);
-				frame.dispose();
-				//w.setTile(2, 2);
+				//frame.dispose();
+				runGame(x_max, y_max, frame);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
 		frame.setVisible(true);
+	}
+	
+	public void runGame(int x, int y, JFrame frame)
+	{
+		new WorldGen(x, y, null);
+		frame.dispose();				
 	}
 }
 
