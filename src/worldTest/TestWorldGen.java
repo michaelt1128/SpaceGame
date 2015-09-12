@@ -1,93 +1,53 @@
 package worldTest;
-
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-
-@SuppressWarnings("serial")
-public class TestWorldGen extends JFrame
-{
-    private static final String INITIAL_TEXT = "Nothing Pressed";
-    private static final String ADDED_TEXT = " was Pressed";
-    private JLabel positionLabel;
-    private JButton resetButton;
-    private static int gridSize = 10;
-
-    public TestWorldGen()
-    {
-        super("Layout Example");
-    }
-
-    private void createAndDisplayGUI()
-    {       
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
-        contentPane.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-
-        JPanel leftPanel = new JPanel();
-        leftPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));    
-        JPanel labelPanel = new JPanel();
-        positionLabel = new JLabel(INITIAL_TEXT, JLabel.CENTER);
-        JPanel buttonLeftPanel = new JPanel();
-        resetButton = new JButton("Reset");
-        resetButton.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent ae)
-            {
-                positionLabel.setText(INITIAL_TEXT);
-            }
-        });
-        labelPanel.add(positionLabel);
-        buttonLeftPanel.add(resetButton);
-        leftPanel.add(labelPanel);
-        leftPanel.add(buttonLeftPanel);
-
-        contentPane.add(leftPanel);
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(gridSize, gridSize, 0, 0));
-        for (int i = 0; i < gridSize; i++)
-        {
-            for (int j = 0; j < gridSize; j++)
-            {
-                JButton button = new JButton("(" + i + ", " + j + ")");
-                button.setActionCommand("(" + i + ", " + j + ")");
-                button.addActionListener(new ActionListener()
-                {
-                	public void actionPerformed(ActionEvent ae)
-                    {
-                        JButton but = (JButton) ae.getSource();
-                        positionLabel.setText(
-                            but.getActionCommand() + ADDED_TEXT);                           
-                    }
-                });
-                button.setSize(40, 40);
-                buttonPanel.add(button);
-            }
-        }
-        contentPane.add(buttonPanel);
-
-        setContentPane(contentPane);
-        pack();
-        setLocationByPlatform(true);
-        setVisible(true);
-    }
-
+import java.awt.*;
+ 
+public class TestWorldGen											 
+{ 
+	JFrame frame=new JFrame("Universe");
+    JButton[][] grid;
+    private static Icon image = new ImageIcon(TestWorldGen.class.getResource("/images/space_background2.jpg"));
+    private static Icon background = new ImageIcon(TestWorldGen.class.getResource("/images/StarryNight.png"));
     public static void main(String[] args)
+    {    	
+    	TestWorldGen test = new TestWorldGen(10, 10);
+    	test.setTile(5, 5, image);
+    	test.frame.setVisible(true);
+    }
+    
+    public TestWorldGen(int width, int length) 
     {
-        if (args.length > 0)
+    	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	frame.setLayout(new BorderLayout());	
+    	JPanel buttonPanel = new JPanel();
+    	JLabel bkgImage = new JLabel();
+    	bkgImage.setIcon(background);
+    	frame.add(bkgImage);
+    	bkgImage.setLayout(new FlowLayout());
+    	buttonPanel.setLayout(new GridLayout(width, length));
+    	buttonPanel.setBackground(Color.BLACK);
+    	buttonPanel.setSize(new Dimension(600, 600));
+        grid=new JButton[width][length];
+        
+        for(int y=0; y<length; y++)
         {
-            gridSize = Integer.parseInt(args[0]);
-        }
-        SwingUtilities.invokeLater(new Runnable()
-        {
-            public void run()
-            {
-                new TestWorldGen().createAndDisplayGUI();
+         	for(int x=0; x<width; x++)
+          	{         		
+          		grid[x][y]=new JButton("");
+          		//grid[x][y].setBackground(Color.black);		
+          		grid[x][y].setSize(40, 40);
+          		grid[x][y].setOpaque(false);
+          		buttonPanel.add(grid[x][y]);           		          		
             }
-        });
+        }
+        frame.pack();
+        frame.add(buttonPanel);
+        frame.setVisible(false);
+        frame.setResizable(false);
+    }
+    
+    public void setTile(int x_val, int y_val, Icon image)
+    {
+    	grid[x_val][y_val].setIcon(image);
     }
 }

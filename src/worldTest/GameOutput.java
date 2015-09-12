@@ -17,13 +17,16 @@ import javax.swing.JLabel;
 
 public class GameOutput 
 {
+	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/Kappa.jpg"));
 	public static void main(String[] args)
 	{				
 		Icon[] spc_icons = createSpc();
     	Worlds world = new Worlds();
     	WorldGen w = new WorldGen(10, 10, spc_icons);
     	world.worldGenSet(w);    	
-    	welcomeText(w);    	   
+    	welcomeText(w);
+    	w.setTile(4, 2, mars);
+    	w.setTile(4, 3, mars);
 	}
 	
 	public static void welcomeText(WorldGen x)
