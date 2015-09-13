@@ -1,6 +1,6 @@
 package gameTest;
 
-public class PlayerShip 
+public class PlayerShip extends ShipTraits
 {
 	
 }

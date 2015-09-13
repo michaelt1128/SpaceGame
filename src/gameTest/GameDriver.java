@@ -1,6 +1,5 @@
 package gameTest;
 import java.util.*;
-import java.util.Scanner;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,8 @@ import javax.swing.*;
 
 public class GameDriver 
 {	
+	public ArrayList<Integer> tempP = new ArrayList<Integer>();
+	public ArrayList<Integer> tempE = new ArrayList<Integer>();
 	public static boolean gameState = true;
 	
 	public GameDriver()
@@ -37,26 +38,25 @@ public class GameDriver
 				{
 				public void actionPerformed(ActionEvent e)
 				{
-					startGame();
+					setUpGame();
 					frame.dispose();
+					SpaceBattle b1 = new SpaceBattle();
+					b1.startBattle(tempP, tempE);
 				}
-				});
+				}); 
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
 		frame.setVisible(true);
 	}
 	
-	public void startGame()
+	public void setUpGame()
 	{
-		Scanner sc = new Scanner(System.in);
-		System.out.println("*****-------Welcome to SpaceGame-------*****");
-		System.out.println("--Type the Number of your Decision--");
-		System.out.println("1:Start");
-		System.out.println("2:Options");
-		System.out.println("3:Quit");
-		if(sc.nextInt() == 3)
-		{
-			gameState = false;
-		}
+		PlayerShip pShip = new PlayerShip();
+		EnemyShip eShip = new EnemyShip();
+		
+		tempP.add(0,100); tempP.add(1,100); tempP.add(2,20); tempP.add(3,65);
+		tempE.add(0,100); tempE.add(1,100); tempE.add(2,15); tempE.add(3,35);
+		pShip.setShipStats(tempP);
+		eShip.setShipStats(tempE);
 	}
 	public static void main(String[] args)
 	{

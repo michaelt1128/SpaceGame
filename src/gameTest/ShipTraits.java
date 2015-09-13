@@ -6,7 +6,7 @@ public class ShipTraits
 {
 	public String name;
 	public ArrayList<String> cargo;
-	public ArrayList<Integer> shipStats;
+	public ArrayList<Integer> shipStats; //Shields, Armor, Attack, Accuracy 
 	
 	public ArrayList<Integer> getShipStats()
 	{
