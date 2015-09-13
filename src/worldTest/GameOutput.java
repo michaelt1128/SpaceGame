@@ -17,7 +17,10 @@ import javax.swing.JLabel;
 
 public class GameOutput 
 {
-	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/Kappa.jpg"));
+	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
+	private static Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
+	private static Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
+
 	public static void main(String[] args)
 	{				
 		Icon[] spc_icons = createSpc();
@@ -26,19 +29,11 @@ public class GameOutput
     	world.worldGenSet(w);    	
     	welcomeText(w);
     	w.setTile(4, 2, mars);
-    	w.setTile(4, 3, mars);
-    	try {
-    		Thread.sleep(2000);
-    	} catch (InterruptedException e) {
-    		e.printStackTrace();
-    	}
-        w.resetTile(4, 3, spc_icons);
-        try {
-    		Thread.sleep(2000);
-    	} catch (InterruptedException e) {
-    		e.printStackTrace();
-    	}
-        w.resetTile(4, 2, spc_icons);
+    	w.grid[4][2].setToolTipText("Mars");
+    	w.setTile(6, 3, uranus);
+    	w.grid[6][3].setToolTipText("Uranus");
+    	w.setTile(8, 8, sun);
+    	w.grid[8][8].setToolTipText("Sun");
 	}
 	
 	public static void welcomeText(WorldGen x)
