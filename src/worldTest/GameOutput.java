@@ -27,6 +27,18 @@ public class GameOutput
     	welcomeText(w);
     	w.setTile(4, 2, mars);
     	w.setTile(4, 3, mars);
+    	try {
+    		Thread.sleep(2000);
+    	} catch (InterruptedException e) {
+    		e.printStackTrace();
+    	}
+        w.resetTile(4, 3, spc_icons);
+        try {
+    		Thread.sleep(2000);
+    	} catch (InterruptedException e) {
+    		e.printStackTrace();
+    	}
+        w.resetTile(4, 2, spc_icons);
 	}
 	
 	public static void welcomeText(WorldGen x)
