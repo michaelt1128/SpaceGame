@@ -1,14 +1,12 @@
 package worldTest;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,26 +18,60 @@ public class GameOutput
 	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
 	private static Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
 	private static Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
+	private static Icon marsBase0 = new ImageIcon(WorldGen.class.getResource("/images/marsBase0.png"));
 
 	public static void main(String[] args)
 	{				
-		Icon[] spc_icons = createSpc();
-    	Worlds world = new Worlds();
+		CreateIcons iconCreator = new CreateIcons();
+		Icon[] spc_icons = iconCreator.createSpc();
+		Icon[] mars_Icons = iconCreator.createMars();
+		Icon[] uranus_Icons = iconCreator.createUranus();
+		
     	WorldGen w = new WorldGen(10, 10, spc_icons);
-    	world.worldGenSet(w);    	
-    	welcomeText(w);
+    	w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    	w.frame.setLocation(dim.width/2-w.frame.getSize().width/2, 0);
+    	
+
+    	GameUpdates gameUpdate = new GameUpdates();   	
+    	gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY()+w.frame.getHeight());
+    	welcomeText(w, gameUpdate);
+    	
     	w.setTile(4, 2, mars);
     	w.grid[4][2].setToolTipText("Mars");
+    	w.grid[4][2].addActionListener(new ActionListener()
+    	{
+    		public void actionPerformed(ActionEvent e1)
+    		{
+    			WorldGen mars = new WorldGen(10,10, mars_Icons);
+    			mars.frame.setVisible(true);
+    			mars.frame.setTitle("Mars");
+    			mars.setTile(4, 4, marsBase0);
+    			mars.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    		}
+    	}
+    	);
+    	
     	w.setTile(6, 3, uranus);
     	w.grid[6][3].setToolTipText("Uranus");
+    	w.grid[6][3].addActionListener(new ActionListener()
+    	{
+    		public void actionPerformed(ActionEvent e2)
+    		{
+    			WorldGen uranus = new WorldGen(10,10, uranus_Icons);
+    			uranus.frame.setVisible(true);
+    			uranus.frame.setTitle("Uranus");
+    			uranus.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    		}
+    	}
+    	);
     	w.setTile(8, 8, sun);
     	w.grid[8][8].setToolTipText("Sun");
 	}
 	
-	public static void welcomeText(WorldGen x)
+	public static void welcomeText(WorldGen x, GameUpdates y)
 	{
-		JFrame frame = new JFrame("SPACE GAME");
-		frame.setBackground(Color.YELLOW);
+		JFrame frame = new JFrame("Space Game");
 		frame.setLayout(new BorderLayout());
 		
 		JLabel hiText = new JLabel("Welcome to SPACE GAME");
@@ -54,65 +86,19 @@ public class GameOutput
 			public void actionPerformed(ActionEvent e)
 			{	
 				x.frame.setVisible(true);				
-				frame.dispose();				
+				frame.dispose();
+				y.frame.setVisible(true);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
 		frame.add(hiText, BorderLayout.PAGE_START);
 		frame.add(infoText, BorderLayout.CENTER);		
 		frame.setSize(340, 150);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
-	}
-	public static Icon[] createSpc()
-	{
-		Icon spc_0 = null;
-    	Icon spc_1 = null;
-    	Icon spc_2 = null;
-    	Icon spc_3 = null;
-    	Icon spc_4 = null;
-    	Icon spc_5 = null;
-    	Icon spc_6 = null;    	
-    	
-    	try
-    	{   		
-    		BufferedImage spc0 = ImageIO.read(WorldGen.class.getResource("/images/space_background0.jpg"));
-    		spc_0 = new ImageIcon(spc0);
-    		
-    		BufferedImage spc1 = ImageIO.read(WorldGen.class.getResource("/images/space_background1.jpg"));
-    		spc_1 = new ImageIcon(spc1);
-    		
-    		BufferedImage spc2 = ImageIO.read(WorldGen.class.getResource("/images/space_background2.jpg"));
-    		spc_2 = new ImageIcon(spc2);
+    	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+    	frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
 
-    		BufferedImage spc3 = ImageIO.read(WorldGen.class.getResource("/images/space_background3.jpg"));
-    		spc_3 = new ImageIcon(spc3);
-    		
-    		BufferedImage spc4 = ImageIO.read(WorldGen.class.getResource("/images/space_background4.jpg"));
-    		spc_4 = new ImageIcon(spc4);
-    		
-    		BufferedImage spc5 = ImageIO.read(WorldGen.class.getResource("/images/space_background5.jpg"));
-    		spc_5 = new ImageIcon(spc5);
-    		
-    		BufferedImage spc6 = ImageIO.read(WorldGen.class.getResource("/images/space_background6.jpg"));
-    		spc_6 = new ImageIcon(spc6);  
-    	}
-    	catch(IOException e)
-    	{
-    		e.printStackTrace();
-    	}
-    	
-    	Icon[] spcIcons = new Icon[7];
-    	spcIcons[0] = spc_0;
-    	spcIcons[1] = spc_1;
-    	spcIcons[2] = spc_2;
-    	spcIcons[3] = spc_3;
-    	spcIcons[4] = spc_4;
-    	spcIcons[5] = spc_5;
-    	spcIcons[6] = spc_6;
-    	
-    	return spcIcons;
-	}
+		frame.setVisible(true);
+	}	
 }
 
 

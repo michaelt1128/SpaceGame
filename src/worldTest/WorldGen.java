@@ -1,8 +1,6 @@
 package worldTest;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -94,18 +92,9 @@ public class WorldGen
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-    			int testx = x;
-    			int testy = y;
-    			grid[x][y].addActionListener(new ActionListener()
-    			{
-    				public void actionPerformed(ActionEvent e)
-    				{				
-    					resetTile(testx, testy, image);
-    				}
-    			});
             }
         }
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(false); 
         frame.setResizable(false);
         try {
