@@ -52,9 +52,16 @@ public class GameDriver
 	{
 		PlayerShip pShip = new PlayerShip();
 		EnemyShip eShip = new EnemyShip();
-		
-		tempP.add(0,100); tempP.add(1,100); tempP.add(2,20); tempP.add(3,65);
-		tempE.add(0,100); tempE.add(1,100); tempE.add(2,15); tempE.add(3,35);
+		tempP.add(0,100);
+		tempP.add(1,65);
+		tempP.add(2,45);
+		tempP.add(3,55);
+		tempP.add(4,98);
+		tempE.add(0,35);
+		tempE.add(1,65);
+		tempE.add(2,45);
+		tempE.add(3,20);
+		tempE.add(4,100);
 		pShip.setShipStats(tempP);
 		eShip.setShipStats(tempE);
 	}
