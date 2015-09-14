@@ -19,13 +19,15 @@ public class GameOutput
 	private static Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
 	private static Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
 	private static Icon marsBase0 = new ImageIcon(WorldGen.class.getResource("/images/marsBase0.png"));
-
+	private static Icon pluto = new ImageIcon(WorldGen.class.getResource("/images/pluto.png"));
+	
 	public static void main(String[] args)
 	{				
 		CreateIcons iconCreator = new CreateIcons();
 		Icon[] spc_icons = iconCreator.createSpc();
 		Icon[] mars_Icons = iconCreator.createMars();
 		Icon[] uranus_Icons = iconCreator.createUranus();
+		Icon[] pluto_Icons = iconCreator.createPluto();
 		
     	WorldGen w = new WorldGen(10, 10, spc_icons);
     	w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,6 +69,18 @@ public class GameOutput
     	);
     	w.setTile(8, 8, sun);
     	w.grid[8][8].setToolTipText("Sun");
+    	w.setTile(3, 8, pluto);
+    	w.grid[3][8].addActionListener(new ActionListener()
+    	{
+    		public void actionPerformed(ActionEvent e1)
+    		{
+    			WorldGen pluto = new WorldGen(10,10, pluto_Icons);
+    			pluto.frame.setVisible(true);
+    			pluto.frame.setTitle("Pluto");
+    			pluto.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    		}
+    	}
+    	);
 	}
 	
 	public static void welcomeText(WorldGen x, GameUpdates y)

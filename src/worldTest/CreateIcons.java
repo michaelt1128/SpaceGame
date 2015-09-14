@@ -63,4 +63,20 @@ public class CreateIcons {
 		uranusIcons[6]= uranus0;
 		return uranusIcons;
 	}
+	
+	public Icon[] createPluto()
+	{
+		Icon pluto0 = new ImageIcon(WorldGen.class.getResource("/images/pluto0.png"));
+		
+		Icon[] plutoIcons = new Icon[7];
+		plutoIcons[0] = pluto0;
+		plutoIcons[1] = pluto0;
+		plutoIcons[2] = pluto0;
+		plutoIcons[3] = pluto0;
+		plutoIcons[4] = pluto0;
+		plutoIcons[5] = pluto0;
+		plutoIcons[6] = pluto0;
+		
+		return plutoIcons;
+	}
 }

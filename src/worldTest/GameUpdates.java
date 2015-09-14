@@ -16,6 +16,5 @@ public class GameUpdates {
 		JLabel label = new JLabel("hi");
 		frame.add(label);
 		frame.setResizable(false);
-		
 	}
 }
