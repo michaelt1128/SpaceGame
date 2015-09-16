@@ -6,12 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 public class SpaceBattle 
 {
-	public ArrayList<Integer> startBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
+	public boolean startBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{
+		boolean pWon = true;
 		
 		JFrame bFrame = new JFrame("Space Battle");
-		while(pStats.get(2) > 0 && eStats.get(2) > 0)
-		{
 		JPanel panel = new JPanel();
 		panel.setSize(800,400);
 		
@@ -38,9 +37,10 @@ public class SpaceBattle
 				{
 					if(eStats.get(0) > 0)
 					{
-						double tempDmg = pStats.get(3) * (pStats.get(4) / 100);
-						int tempHp = (int)Math.round(eStats.get(0) - tempDmg);
-						JLabel attckText = new JLabel("Enemy HP: " + tempHp);
+						double tempDmg = (double)pStats.get(3) * ((double)pStats.get(4) / (double)100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
+						double tempArmor = ((tempDmg - (double)eStats.get(0)) * ((100)/(100 - (double)eStats.get(2))));
+						double tempShields = eStats.get(0);
+						JLabel attckText = new JLabel("Enemy Armor: " + tempArmor + "\n" + "Enemy Shields: ");
 						panel.add(attckText,BorderLayout.SOUTH);
 						bFrame.setVisible(true);
 						
@@ -60,7 +60,7 @@ public class SpaceBattle
 		panel.add(fleeButton);
 		bFrame.getContentPane().add(panel);
 		bFrame.setVisible(true);
-		}
-		return pStats;
+		
+		return pWon;
 	}
 }
