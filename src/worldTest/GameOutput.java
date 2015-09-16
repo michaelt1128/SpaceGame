@@ -47,15 +47,17 @@ public class GameOutput
     	WorldGen w = new WorldGen(10, 10, spc_icons);
     	w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-    	w.frame.setLocation(dim.width/2-w.frame.getSize().width/2, 0);
+    	w.frame.setLocation(dim.width/2-w.frame.getSize().width, 0);
     	
+       	
+    	
+
     	//Creates the gameUpdate object and places it below the universe object
     	//this is used for the main text of the program
     	GameUpdates gameUpdate = new GameUpdates();   	
-    	gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY()+w.frame.getHeight());
-    	setUpGame();
-    	SpaceBattle sb = new SpaceBattle(tempP, tempE);
-    	welcomeText(w, gameUpdate, sb);
+    	gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY()+w.frame.getHeight()+400);
+    	
+    	welcomeText(w, gameUpdate);
     	
     	//Create the mars tile and open mars map
     	w.setTile(4, 2, mars);
@@ -71,6 +73,11 @@ public class GameOutput
     			marsGen.frame.setTitle("Mars");
     			marsGen.setTile(4, 4, marsBase0);
     			marsGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    			
+    			setUpGame();
+    	    	SpaceBattle sb = new SpaceBattle(tempP, tempE);
+    	    	sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+    	    	sb.bFrame.setVisible(true);
     		}
     	}
     	);
@@ -116,7 +123,7 @@ public class GameOutput
     	
 	}
 	
-	public static void welcomeText(WorldGen x, GameUpdates y, SpaceBattle z)
+	public static void welcomeText(WorldGen x, GameUpdates y)
 	{
 		JFrame frame = new JFrame("Space Game");
 		frame.setLayout(new BorderLayout());
@@ -137,7 +144,6 @@ public class GameOutput
 				x.frame.setVisible(true);				
 				frame.dispose();
 				y.frame.setVisible(true);
-				z.bFrame.setVisible(true);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);

@@ -7,9 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 
+@SuppressWarnings("unused")
 public class GameDriver 
 {	
-	public ArrayList<Integer> tempP = new ArrayList<Integer>();
+/*	public ArrayList<Integer> tempP = new ArrayList<Integer>();
 	public ArrayList<Integer> tempE = new ArrayList<Integer>();
 	public static boolean gameState = true;
 	
@@ -72,5 +73,5 @@ public class GameDriver
 		
 		
 		
-	}
+	}*/
 }

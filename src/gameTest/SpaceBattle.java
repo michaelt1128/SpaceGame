@@ -1,6 +1,5 @@
 package gameTest;
 import java.util.*;
-import worldTest.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,7 +31,7 @@ public class SpaceBattle
 		fleeButton.setSize(50,50);
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		JFrame wframe = null;
+		
 		bFrame.setLocation(dim.width/2-bFrame.getSize().width/2, dim.height/2-bFrame.getSize().height/2);
 		
 		attackButton.addActionListener(new ActionListener()

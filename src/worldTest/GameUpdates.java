@@ -11,7 +11,7 @@ public class GameUpdates {
 	public GameUpdates()
 	{
 		frame.setLayout(new BorderLayout());		
-		frame.setSize(800, 200);	
+		frame.setSize(800, 300);	
 		
 		JLabel label = new JLabel("hi");
 		frame.add(label);
