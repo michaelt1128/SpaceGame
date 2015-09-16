@@ -6,15 +6,20 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import gameTest.*;
 
 public class GameOutput 
 {
+	public static ArrayList<Integer> tempP = new ArrayList<Integer>();
+	public static ArrayList<Integer> tempE = new ArrayList<Integer>();
+	public static boolean gameState = true;
 	
 	//declares and initializes the images used on maps
 	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
@@ -48,7 +53,9 @@ public class GameOutput
     	//this is used for the main text of the program
     	GameUpdates gameUpdate = new GameUpdates();   	
     	gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY()+w.frame.getHeight());
-    	welcomeText(w, gameUpdate);
+    	setUpGame();
+    	SpaceBattle sb = new SpaceBattle(tempP, tempE);
+    	welcomeText(w, gameUpdate, sb);
     	
     	//Create the mars tile and open mars map
     	w.setTile(4, 2, mars);
@@ -106,9 +113,10 @@ public class GameOutput
     	//Create sun tile
     	w.setTile(8, 8, sun);
     	w.grid[8][8].setToolTipText("Sun");
+    	
 	}
 	
-	public static void welcomeText(WorldGen x, GameUpdates y)
+	public static void welcomeText(WorldGen x, GameUpdates y, SpaceBattle z)
 	{
 		JFrame frame = new JFrame("Space Game");
 		frame.setLayout(new BorderLayout());
@@ -129,6 +137,7 @@ public class GameOutput
 				x.frame.setVisible(true);				
 				frame.dispose();
 				y.frame.setVisible(true);
+				z.bFrame.setVisible(true);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
@@ -141,6 +150,24 @@ public class GameOutput
 
 		frame.setVisible(true);
 	}	
+	public static void setUpGame()
+	{
+		PlayerShip pShip = new PlayerShip();
+		EnemyShip eShip = new EnemyShip();
+		tempP.add(0,100);
+		tempP.add(1,65);
+		tempP.add(2,45);
+		tempP.add(3,55);
+		tempP.add(4,98);
+		tempE.add(0,100);
+		tempE.add(1,1000);
+		tempE.add(2,100);
+		tempE.add(3,20);
+		tempE.add(4,100);
+		tempE.add(5,1000);
+		pShip.setShipStats(tempP);
+		eShip.setShipStats(tempE);
+	}
 }
 
 

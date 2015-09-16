@@ -55,14 +55,14 @@ public class GameDriver
 		tempP.add(0,100);
 		tempP.add(1,65);
 		tempP.add(2,45);
-		tempP.add(3,35);
+		tempP.add(3,55);
 		tempP.add(4,98);
 		tempE.add(0,100);
-		tempE.add(1,2000);
+		tempE.add(1,1000);
 		tempE.add(2,100);
 		tempE.add(3,20);
 		tempE.add(4,100);
-		tempE.add(5,2000);
+		tempE.add(5,1000);
 		pShip.setShipStats(tempP);
 		eShip.setShipStats(tempE);
 	}
