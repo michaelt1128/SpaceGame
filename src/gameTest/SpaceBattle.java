@@ -8,6 +8,7 @@ public class SpaceBattle
 {
 	public boolean startBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{
+		
 		boolean pWon = true;
 		
 		JFrame bFrame = new JFrame("Space Battle");
@@ -38,8 +39,12 @@ public class SpaceBattle
 				{
 					if(eStats.get(0) > 0)
 					{
+						double tempArmor = (double)eStats.get(2);
 						double tempDmg = (double)pStats.get(3) * ((double)pStats.get(4) / (double)100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
-						double tempArmor = ((tempDmg - (double)eStats.get(0)) * ((100)/(100 - (double)eStats.get(2))));
+						if(eStats.get(0)<tempDmg)
+						{
+							tempArmor = ((tempDmg - (double)eStats.get(0)) * ((100)/(100 + (double)eStats.get(2))));
+						}
 						double tempShields = eStats.get(1);
 						if(tempDmg>=(double)eStats.get(0))//if damage is greater than the shield absorbency, use the shield absorbency value when decreasing shield durability
 						{
@@ -48,15 +53,15 @@ public class SpaceBattle
 						else if(tempDmg<(double)eStats.get(0)){ 
 							tempShields = (double)eStats.get(1)-tempDmg;
 						}
-						tempShields = Math.round(tempShields);
-						eStats.add(1, (int)tempShields);
-						eStats.add(2, (int)tempArmor);
 						
-						int shieldPerc = (eStats.get(1)/eStats.get(5))*100;
-						JLabel attckText = new JLabel("Enemy Armor: " +eStats.get(2) + "\n" + "Enemy Shields: " + shieldPerc);
+						tempShields = Math.round(tempShields);
+						eStats.set(1, (int)tempShields);
+						eStats.set(2, (int)tempArmor);
+						
+						double shieldPerc = ((double)eStats.get(1)/(double)eStats.get(5)) * 100;
+						JLabel attckText = new JLabel("Enemy Armor: " +eStats.get(2) + "\n" + "Enemy Shields: " + shieldPerc + "%");
 						panel.add(attckText,BorderLayout.SOUTH);
 						bFrame.setVisible(true);
-						
 					}
 				}
 				});
