@@ -17,11 +17,6 @@ public class WorldGen
     JButton[][] grid;
     File randVals = new File(WorldGen.class.getResource("/textFiles/randVals.txt").getFile());
            
-    public static void main(String[] args)
-    {    	
-    	
-    }
-    
     public WorldGen(int width, int length, Icon image[])
     { 
     	frame.setLayout(new GridLayout(width, length));
