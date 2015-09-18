@@ -6,7 +6,7 @@ public class ShipTraits
 {
 	public String name;
 	public ArrayList<String> cargo;
-	public ArrayList<Integer> shipStats; //Shields, Shield Strength, Armor, Attack, Accuracy, max Shields
+	public ArrayList<Integer> shipStats; //Shield absorb, Shield Durability, Armor, Attack, Accuracy, max Shields
 	
 	public ArrayList<Integer> getShipStats()
 	{
