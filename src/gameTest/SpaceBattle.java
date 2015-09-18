@@ -21,7 +21,6 @@ public class SpaceBattle
 		turnNum.setFont(new Font("Serif", Font.BOLD, 24));
 		
 		bFrame.setSize(800,400);
-		bFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		bFrame.setVisible(true);
 		
 		JButton attackButton = new JButton("Attack");
