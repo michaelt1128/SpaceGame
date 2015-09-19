@@ -31,7 +31,7 @@ public class SpaceBattle
 		JButton attackButton = new JButton("Attack");
 		attackButton.setSize(200,100);
 		JLabel atkText = new JLabel();
-		JLbael dfsText = new JLabel();
+		JLabel dfsText = new JLabel();
 		
 		JButton fleeButton = new JButton("Flee");
 		fleeButton.setSize(50,50);
@@ -182,6 +182,7 @@ public class SpaceBattle
 			{
 				System.out.println("Finished battle. You don't need to attack.");
 			}
+		}
 		
 		});
 		
