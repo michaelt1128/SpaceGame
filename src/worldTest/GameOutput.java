@@ -160,10 +160,11 @@ public class GameOutput
 		PlayerShip pShip = new PlayerShip();
 		EnemyShip eShip = new EnemyShip();
 		tempP.add(0,100);
-		tempP.add(1,65);
-		tempP.add(2,45);
-		tempP.add(3,150);
+		tempP.add(1,1000);
+		tempP.add(2,100);
+		tempP.add(3,20);
 		tempP.add(4,98);
+		tempE.add(5, 1000);
 		tempE.add(0,100);
 		tempE.add(1,1000);
 		tempE.add(2,100);
