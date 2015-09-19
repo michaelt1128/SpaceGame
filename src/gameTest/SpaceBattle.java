@@ -118,71 +118,71 @@ public class SpaceBattle
 					System.out.println("Finished battle. You don't need to attack.");
 				}
 			
-			if(pStats.get(2) > 0)
-			{
-				double shieldAbsorb = (double)pStats.get(0);
-				double shieldDurability = (double)pStats.get(1);
-				double armor = (double)pStats.get(2);
-				double attack = (double)eStats.get(3);
-				double accuracy = (double)eStats.get(4);
-				double maxShields = (double)pStats.get(5);
-				
-				double dmg = attack * (accuracy / 100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
-				double armorNegationPercent = (double)(100/(100+armor));
-				
-				
-				if(shieldDurability > 0) //makes sure the shields are up
+				if(pStats.get(2) > 0)
 				{
-					if(shieldAbsorb < dmg) //checks to see if the damage is greater than the shields can take
+					double shieldAbsorb = (double)pStats.get(0);
+					double shieldDurability = (double)pStats.get(1);
+					double armor = (double)pStats.get(2);
+					double attack = (double)eStats.get(3);
+					double accuracy = (double)eStats.get(4);
+					double maxShields = (double)pStats.get(5);
+				
+					double dmg = attack * (accuracy / 100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
+					double armorNegationPercent = (double)(100/(100+armor));
+				
+				
+					if(shieldDurability > 0) //makes sure the shields are up
 					{
-						armor -= (dmg - shieldAbsorb) * armorNegationPercent; 
-						shieldDurability -= shieldAbsorb; //if the damage is greater than the shields absorbtion, the shields durability will be hit a max of the shields absorbtion, the rest goes to the armor
-					}						
-					else if(shieldAbsorb>=dmg) //if the damage is less than the shields can take, the shield's durability will be hit by the damage
-					{
-						shieldDurability -= dmg;
+						if(shieldAbsorb < dmg) //checks to see if the damage is greater than the shields can take
+						{
+							armor -= (dmg - shieldAbsorb) * armorNegationPercent; 
+							shieldDurability -= shieldAbsorb; //if the damage is greater than the shields absorbtion, the shields durability will be hit a max of the shields absorbtion, the rest goes to the armor
+						}						
+						else if(shieldAbsorb>=dmg) //if the damage is less than the shields can take, the shield's durability will be hit by the damage
+						{
+							shieldDurability -= dmg;
+						}
 					}
-				}
-				else
-				{
-					armor = armor - (dmg * armorNegationPercent); //if there is no more durability on the shields, the armor is hit harder
-				}										
+					else
+					{
+						armor = armor - (dmg * armorNegationPercent); //if there is no more durability on the shields, the armor is hit harder
+					}										
 					
-				shieldDurability = Math.round(shieldDurability);
+					shieldDurability = Math.round(shieldDurability);
 				
-				if(shieldDurability < 0) //If the tempShields is ever negative it will set it to 0.
-				{
-					shieldDurability = 0;
-					pStats.set(1, 0);
+					if(shieldDurability < 0) //If the tempShields is ever negative it will set it to 0.
+					{
+						shieldDurability = 0;
+						pStats.set(1, 0);
+					}
+					else
+					{
+						pStats.set(1, (int)shieldDurability);
+					}
+					if(armor < 0) //if the tempArmor is ever negative it will set it to 0.
+					{
+						pStats.set(2, 0);
+						armor = 0;
+					}
+					else
+					{
+						pStats.set(2, (int)armor);
+					}
+				
+					double pShieldPercent = (shieldDurability/maxShields) * 100;
+					if(pShieldPercent < 0) //if the shield percentage ever goes negative this will instantly set the shield percent to 0.
+					{
+						pShieldPercent = 0;
+					}
+					dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
+					textPanel.add(dfsText,BorderLayout.SOUTH);
+					bFrame.setVisible(true);							
 				}
 				else
 				{
-					pStats.set(1, (int)shieldDurability);
+					System.out.println("Finished battle. You don't need to attack.");
 				}
-				if(armor < 0) //if the tempArmor is ever negative it will set it to 0.
-				{
-					pStats.set(2, 0);
-					armor = 0;
-				}
-				else
-				{
-					pStats.set(2, (int)armor);
-				}
-				
-				double pShieldPercent = (shieldDurability/maxShields) * 100;
-				if(pShieldPercent < 0) //if the shield percentage ever goes negative this will instantly set the shield percent to 0.
-				{
-					pShieldPercent = 0;
-				}
-				dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
-				textPanel.add(dfsText,BorderLayout.SOUTH);
-				bFrame.setVisible(true);							
 			}
-			else
-			{
-				System.out.println("Finished battle. You don't need to attack.");
-			}
-		}
 		
 		});
 		
