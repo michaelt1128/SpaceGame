@@ -43,7 +43,7 @@ public class SpaceBattle
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if(eStats.get(0) > 0)
+				if(eStats.get(2) > 0)
 				{
 					if(buttonCount > 0)
 					{
@@ -51,48 +51,52 @@ public class SpaceBattle
 					}
 					buttonCount++;
 					turnCount++;
-					bFrame.remove(turnNum);
-					bFrame.add(turnNum);
+					turnNum.setText("Turn " + turnCount);
+					
+					//This greatly improves readability of the code
+					double tempShieldAbsorb = (double)eStats.get(0);
+					double tempShieldDurability = (double)eStats.get(1);
 					double tempArmor = (double)eStats.get(2);
-					double tempDmg = (double)pStats.get(3) * ((double)pStats.get(4) / (double)100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
-					System.out.println(tempDmg);
-					if(eStats.get(0)<tempDmg)
+					double tempAttack = (double)pStats.get(3);
+					double tempAccuracy = (double)pStats.get(4);
+					double tempMaxShields = (double)eStats.get(5);
+					
+					double tempDmg = tempAttack * (tempAccuracy / 100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
+					double tempArmorNegationPercent = (double)(100/(100+tempArmor));
+					
+					System.out.println("Damage: " + tempDmg);
+					System.out.println("Shield absorb: " + tempShieldAbsorb);
+					System.out.println("Real Damage: " + tempDmg * tempArmorNegationPercent);
+					
+					if(tempShieldDurability > 0) //makes sure the shields are up
 					{
-						if(eStats.get(1)>0)
+						if(tempShieldAbsorb < tempDmg) //checks to see if the damage is greater than the shields can take
 						{
-							tempArmor = ((tempDmg - (double)eStats.get(0)) * ((100)/(100 + (double)eStats.get(2))));
-							System.out.println("lol" + tempDmg);
+							tempArmor -= (tempDmg - tempShieldAbsorb) * tempArmorNegationPercent; 
+							tempShieldDurability -= tempShieldAbsorb; //if the damage is greater than the shields absorbtion, the shields durability will be hit a max of the shields absorbtion, the rest goes to the armor
+						}						
+						else if(tempShieldAbsorb>=tempDmg) //if the damage is less than the shields can take, the shield's durability will be hit by the damage
+						{
+							tempShieldDurability -= tempDmg;
 						}
-						
 					}
 					else
 					{
-						tempArmor = tempDmg * (100/(100 + (double)eStats.get(2)));
-						System.out.println("lala" + tempDmg);
-					}
-
-					
-					double tempShields = eStats.get(1);
-					if(tempDmg>=(double)eStats.get(0))//if damage is greater than the shield absorbency, use the shield absorbency value when decreasing shield durability
-					{
-						tempShields = (double)eStats.get(1)-(double)eStats.get(0);
-					}
-					else if(tempDmg<(double)eStats.get(0)){ 
-						tempShields = (double)eStats.get(1)-tempDmg;
-					}
-					
+						tempArmor = tempArmor - (tempDmg * tempArmorNegationPercent); //if there is no more durability on the shields, the armor is hit harder
+					}										
 						
-					tempShields = Math.round(tempShields);
-					eStats.set(1, (int)tempShields);
+					tempShieldDurability = Math.round(tempShieldDurability);
+					eStats.set(1, (int)tempShieldDurability);
 					eStats.set(2, (int)tempArmor);
 						
-					double shieldPerc = ((double)eStats.get(1)/(double)eStats.get(5)) * 100;
-					atkText.setText("Enemy Armor: " +eStats.get(2) + "\n" + "Enemy Shields: " + shieldPerc + "%");
+					double shieldPercent = (tempShieldDurability/tempMaxShields) * 100;
+					atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
 					textPanel.add(atkText,BorderLayout.SOUTH);
-					bFrame.setVisible(true);
-					
-				
-					
+					bFrame.setVisible(true);							
+				}
+				else
+				{
+					System.out.println("Finished battle. You don't need to attack.");
 				}
 			}
 		});

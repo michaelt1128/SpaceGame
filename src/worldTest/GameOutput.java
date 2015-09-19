@@ -17,6 +17,7 @@ import gameTest.*;
 
 public class GameOutput 
 {
+	//arraylists to store values for the ship battle
 	public static ArrayList<Integer> tempP = new ArrayList<Integer>();
 	public static ArrayList<Integer> tempE = new ArrayList<Integer>();
 	public static boolean gameState = true;
@@ -48,9 +49,7 @@ public class GameOutput
     	w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
     	w.frame.setLocation(dim.width/2-w.frame.getSize().width, 0);
-    	
-       	
-    	
+    	    	
 
     	//Creates the gameUpdate object and places it below the universe object
     	//this is used for the main text of the program
