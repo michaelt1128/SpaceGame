@@ -3,7 +3,10 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
+
+import worldTest.WorldGen;
 public class SpaceBattle 
 {
 	public int turnCount = 1;
@@ -11,24 +14,36 @@ public class SpaceBattle
 	public JFrame bFrame = new JFrame("Space Battle");
 	public SpaceBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{		
+		JPanel battleGif = new JPanel();
+		battleGif.setSize(300,300);
 		
+		
+		JLabel battleScene = new JLabel(new ImageIcon(WorldGen.class.getResource("/images/epicBattle.webm")));
+		battleGif.add(battleScene);
+		
+		JPanel shieldPanel = new JPanel();
+		shieldPanel.setSize(800,50);
+		shieldPanel.setBackground(Color.CYAN);
 		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new GridBagLayout());
-
-		JPanel buttonPanel = new JPanel();
-		JPanel textPanel = new JPanel();
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 2;
-		mainPanel.add(buttonPanel,c);
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.setSize(800,200);
+		mainPanel.setBackground(Color.ORANGE);
 		
+		
+		
+	
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.GREEN);;
+		JPanel textPanel = new JPanel();
+		textPanel.setSize(100,200);
+		textPanel.setLayout(new BorderLayout());
+		textPanel.setBackground(Color.WHITE);
 		bFrame.setBackground(Color.BLACK);
 		bFrame.setLayout(new BorderLayout());
 		JLabel turnNum = new JLabel("Turn " + turnCount);
-		c.gridx = 0;
-		c.gridy = 5;
-		mainPanel.add(turnNum,c);
+		mainPanel.add(turnNum, BorderLayout.PAGE_START);
+		mainPanel.add(buttonPanel, BorderLayout.CENTER);
 		turnNum.setFont(new Font("Serif", Font.BOLD, 24));
 		
 		bFrame.setSize(800,400);
@@ -116,11 +131,10 @@ public class SpaceBattle
 					}
 					else
 					{
-						atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
+						atkText.setText("<html>Enemy Armor: " + Math.round(tempArmor) + "<br>" + "Enemy Shields: " + Math.round(shieldPercent) + "%</html>");
+						
 					}
-					c.gridx = 0;
-					c.gridy = 0;
-					textPanel.add(atkText,c);
+					textPanel.add(atkText, BorderLayout.NORTH);
 					bFrame.setVisible(true);							
 				}
 				else
@@ -192,11 +206,9 @@ public class SpaceBattle
 					}
 					else
 					{
-						dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
+						dfsText.setText("<html>Ship Armor: " + Math.round(armor) + " <br>" + "Shields: " + Math.round(pShieldPercent) + "%</html>");
 					}
-					c.gridx = 0;
-					c.gridy = 1;
-					textPanel.add(dfsText,c);
+					textPanel.add(dfsText, BorderLayout.SOUTH);
 					bFrame.setVisible(true);							
 				}
 				else
@@ -212,19 +224,15 @@ public class SpaceBattle
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				c.gridx = 3;
-				c.gridy = 3;
-				textPanel.add(fleeText,c);
+				textPanel.add(fleeText);
 			}
 		});
-		c.gridx = 0;
-		c.gridy = 3;
-		buttonPanel.add(attackButton,c);
-		c.gridx = 0;
-		c.gridy = 1;
-		buttonPanel.add(fleeButton,c);
+		buttonPanel.add(attackButton);
+		buttonPanel.add(fleeButton);
 		bFrame.getContentPane().add(mainPanel, BorderLayout.WEST);
 		bFrame.getContentPane().add(textPanel, BorderLayout.EAST);
+		bFrame.getContentPane().add(shieldPanel, BorderLayout.SOUTH);
+		bFrame.getContentPane().add(battleGif, BorderLayout.CENTER);
 		bFrame.setVisible(false);
 	}
 }
