@@ -18,12 +18,21 @@ public class SpaceBattle
 		battleGif.setSize(300,300);
 		
 		
-		JLabel battleScene = new JLabel(new ImageIcon(WorldGen.class.getResource("/images/epicBattle.webm")));
+		JLabel battleScene = new JLabel(new ImageIcon(WorldGen.class.getResource("/images/spaceBattleScene.gif")));
 		battleGif.add(battleScene);
 		
+		JPanel statusBars = new JPanel();
+		statusBars.setLayout(new BorderLayout());
+		
+		JPanel armorPanel = new JPanel();
+		armorPanel.setSize(800,50);;
+		armorPanel.setBackground(Color.BLACK);
 		JPanel shieldPanel = new JPanel();
-		shieldPanel.setSize(800,50);
+		shieldPanel.setSize(600,50);
 		shieldPanel.setBackground(Color.CYAN);
+		
+		statusBars.add(armorPanel, BorderLayout.NORTH);
+		statusBars.add(shieldPanel, BorderLayout.SOUTH);
 		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -231,7 +240,7 @@ public class SpaceBattle
 		buttonPanel.add(fleeButton);
 		bFrame.getContentPane().add(mainPanel, BorderLayout.WEST);
 		bFrame.getContentPane().add(textPanel, BorderLayout.EAST);
-		bFrame.getContentPane().add(shieldPanel, BorderLayout.SOUTH);
+		bFrame.getContentPane().add(statusBars, BorderLayout.SOUTH);
 		bFrame.getContentPane().add(battleGif, BorderLayout.CENTER);
 		bFrame.setVisible(false);
 	}
