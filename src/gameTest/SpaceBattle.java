@@ -12,11 +12,13 @@ public class SpaceBattle
 	public SpaceBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{		
 		
+		
 		JPanel mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel.setLayout(new GridBagLayout());
 
 		JPanel buttonPanel = new JPanel();
 		JPanel textPanel = new JPanel();
+		GridBagConstraints c = new GridBagConstraints();
 		mainPanel.add(buttonPanel);
 		mainPanel.add(textPanel);
 		bFrame.setBackground(Color.BLACK);
@@ -29,12 +31,10 @@ public class SpaceBattle
 		bFrame.setVisible(true);
 		
 		JButton attackButton = new JButton("Attack");
-		attackButton.setSize(200,100);
 		JLabel atkText = new JLabel();
 		JLabel dfsText = new JLabel();
 		
 		JButton fleeButton = new JButton("Flee");
-		fleeButton.setSize(50,50);
 		JLabel fleeText = new JLabel("You get out by the skin of your teeth.");
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -193,9 +193,12 @@ public class SpaceBattle
 				textPanel.add(fleeText,BorderLayout.SOUTH);
 			}
 		});
-		
-		buttonPanel.add(attackButton);
-		buttonPanel.add(fleeButton);
+		c.gridx = 0;
+		c.gridy = 3;
+		buttonPanel.add(attackButton,c);
+		c.gridx = 0;
+		c.gridy = 1;
+		buttonPanel.add(fleeButton,c);
 		bFrame.getContentPane().add(mainPanel);
 		bFrame.setVisible(false);
 	}

@@ -164,7 +164,7 @@ public class GameOutput
 		tempP.add(2,100);
 		tempP.add(3,150);
 		tempP.add(4,98);
-		tempE.add(5, 1000);
+		tempP.add(5,1000);
 		tempE.add(0,100);
 		tempE.add(1,1000);
 		tempE.add(2,100);
