@@ -19,12 +19,16 @@ public class SpaceBattle
 		JPanel buttonPanel = new JPanel();
 		JPanel textPanel = new JPanel();
 		GridBagConstraints c = new GridBagConstraints();
-		mainPanel.add(buttonPanel);
-		mainPanel.add(textPanel);
+		c.gridx = 0;
+		c.gridy = 2;
+		mainPanel.add(buttonPanel,c);
+		
 		bFrame.setBackground(Color.BLACK);
 		bFrame.setLayout(new BorderLayout());
 		JLabel turnNum = new JLabel("Turn " + turnCount);
-		mainPanel.add(turnNum, BorderLayout.LINE_START);
+		c.gridx = 0;
+		c.gridy = 5;
+		mainPanel.add(turnNum,c);
 		turnNum.setFont(new Font("Serif", Font.BOLD, 24));
 		
 		bFrame.setSize(800,400);
@@ -46,11 +50,7 @@ public class SpaceBattle
 			{
 				if(eStats.get(2) > 0)
 				{
-					if(buttonCount > 0)
-					{
-						bFrame.remove(textPanel);
-					}
-					buttonCount++;
+					
 					turnCount++;
 					turnNum.setText("Turn " + turnCount);
 					
@@ -109,13 +109,24 @@ public class SpaceBattle
 					{
 						shieldPercent = 0;
 					}
-					atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
-					textPanel.add(atkText,BorderLayout.SOUTH);
+					if(tempArmor<=0)
+					{
+						atkText.setText("You've won the battle!");
+						buttonPanel.setVisible(false);
+					}
+					else
+					{
+						atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
+					}
+					c.gridx = 0;
+					c.gridy = 0;
+					textPanel.add(atkText,c);
 					bFrame.setVisible(true);							
 				}
 				else
 				{
 					System.out.println("Finished battle. You don't need to attack.");
+					atkText.setText("You've won the battle.");
 				}
 			
 				if(pStats.get(2) > 0)
@@ -174,13 +185,24 @@ public class SpaceBattle
 					{
 						pShieldPercent = 0;
 					}
-					dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
-					textPanel.add(dfsText,BorderLayout.SOUTH);
+					if(armor<=0)
+					{
+						dfsText.setText("You've lost this one!");
+						buttonPanel.setVisible(false);
+					}
+					else
+					{
+						dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
+					}
+					c.gridx = 0;
+					c.gridy = 1;
+					textPanel.add(dfsText,c);
 					bFrame.setVisible(true);							
 				}
 				else
 				{
 					System.out.println("Finished battle. You don't need to attack.");
+					
 				}
 			}
 		
@@ -190,7 +212,9 @@ public class SpaceBattle
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				textPanel.add(fleeText,BorderLayout.SOUTH);
+				c.gridx = 3;
+				c.gridy = 3;
+				textPanel.add(fleeText,c);
 			}
 		});
 		c.gridx = 0;
@@ -199,7 +223,8 @@ public class SpaceBattle
 		c.gridx = 0;
 		c.gridy = 1;
 		buttonPanel.add(fleeButton,c);
-		bFrame.getContentPane().add(mainPanel);
+		bFrame.getContentPane().add(mainPanel, BorderLayout.WEST);
+		bFrame.getContentPane().add(textPanel, BorderLayout.EAST);
 		bFrame.setVisible(false);
 	}
 }

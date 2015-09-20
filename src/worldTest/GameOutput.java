@@ -74,7 +74,7 @@ public class GameOutput
     			marsGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
     			
     			setUpGame();
-    	    	SpaceBattle sb = new SpaceBattle(tempP, tempE);
+    	    	SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
     	    	sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
     	    	sb.bFrame.setVisible(true);
     		}
@@ -163,16 +163,33 @@ public class GameOutput
 		tempP.add(1,1000);
 		tempP.add(2,100);
 		tempP.add(3,150);
-		tempP.add(4,98);
+		tempP.add(4,90);
 		tempP.add(5,1000);
 		tempE.add(0,100);
 		tempE.add(1,1000);
 		tempE.add(2,100);
-		tempE.add(3,110);
-		tempE.add(4,75);
+		tempE.add(3,130);
+		tempE.add(4,90);
 		tempE.add(5,1000);
 		pShip.setShipStats(tempP);
 		eShip.setShipStats(tempE);
+	}
+	public static ArrayList<Integer> randomEnemy()
+	{
+		ArrayList<Integer> randEnemyShip = new ArrayList();
+		int randShieldAbsorb = (int) (Math.random()*20+80);
+		int randShieldDurability = (int) (Math.random()*200+900);
+		int randArmor = (int) (Math.random()*30+70);
+		int randAttack = (int) (Math.random()*40+100);
+		int randAccuracy = (int) (Math.random()*20+80);
+		randEnemyShip.add(0, randShieldAbsorb);
+		randEnemyShip.add(1, randShieldDurability);
+		randEnemyShip.add(2, randArmor);
+		randEnemyShip.add(3, randAttack);
+		randEnemyShip.add(4, randAccuracy);
+		randEnemyShip.add(5, randShieldDurability);
+		
+		return randEnemyShip;
 	}
 }
 
