@@ -147,19 +147,29 @@ public class GameOutput
     	//Create sun tile
     	w.setTile(8, 8, sun);
     	w.grid[8][8].setToolTipText("Sun");
-    	w.grid[8][8].addActionListener(new ActionListener()
-    	{
+
+    	w.grid[8][8].addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e)
     		{
-    			gameUpdate.label.setText("YOU FUCKING IDIOT WHAT THE AFUFUFCKCKCK>AAAAAAAAA");
-    			Timer timer = new Timer(2000, this);
-    			timer.setInitialDelay(2000);
-    			timer.start();
-    			gameUpdate.label.setText("Haha just kidding but really you can't go into the sun");
+    			gameUpdate.label.setText("<html>WHAT HAVE YOU DONE??!?!? AAAAAAAAAAAAAAA-</html>");
+    			new java.util.Timer().schedule(new java.util.TimerTask() 
+    			{
+    			            public void run() 
+    			            {
+    			                gameUpdate.label.setText("<html><body style='width: 600px'>Oh just kidding. But you should know that the sun is very dangerous and could easily kill you... oh wait...</html>");
+    			            }
+    			}
+    			,2000);
+    			new java.util.Timer().schedule(new java.util.TimerTask() 
+    			{
+    			            public void run() 
+    			            {
+    			                System.exit(0);
+    			            }
+    			}
+    			,5000);
     		}
-    	}
-    	);
-    	
+    	});  	
 	}
 	
 	public static void welcomeText(WorldGen x, GameUpdates y)
