@@ -13,6 +13,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
+
 import gameTest.*;
 
 public class GameOutput 
@@ -57,6 +59,7 @@ public class GameOutput
     	gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY()+w.frame.getHeight()+400);
     	
     	welcomeText(w, gameUpdate);
+		setUpGame();
     	
     	//Create the mars tile and open mars map
     	w.setTile(4, 2, mars);
@@ -70,13 +73,24 @@ public class GameOutput
     			plutoGen.frame.setVisible(false);
     			
     			marsGen.frame.setTitle("Mars");
-    			marsGen.setTile(4, 4, marsBase0);
     			marsGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
-    			
-    			setUpGame();
-    	    	SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-    	    	sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-    	    	sb.bFrame.setVisible(true);
+    			if(Math.random()<.65)
+    			{
+    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+    				sb.bFrame.setVisible(true);
+    			}
+    			marsGen.setTile(3, 3, marsBase0);
+    			marsGen.grid[3][3].addActionListener(new ActionListener()
+    			{
+    				public void actionPerformed(ActionEvent e2)
+    				{
+    					WorldGen marsBaseMap = new WorldGen(10,10, uranus_Icons);
+    					marsBaseMap.frame.setVisible(true);
+    				}
+    				
+    			}
+    			);		
     		}
     	}
     	);
@@ -94,6 +108,13 @@ public class GameOutput
     			
     			uranusGen.frame.setTitle("Uranus");
     			uranusGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    			
+    			if(Math.random()<.65)
+    			{
+    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+    				sb.bFrame.setVisible(true);
+    			}
     		}
     	}
     	);
@@ -111,6 +132,13 @@ public class GameOutput
     			
     			plutoGen.frame.setTitle("Pluto");
     			plutoGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
+    			
+    			if(Math.random()<.65)
+    			{
+    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+    				sb.bFrame.setVisible(true);
+    			}
     		}
     	}
     	);
@@ -119,6 +147,18 @@ public class GameOutput
     	//Create sun tile
     	w.setTile(8, 8, sun);
     	w.grid[8][8].setToolTipText("Sun");
+    	w.grid[8][8].addActionListener(new ActionListener()
+    	{
+    		public void actionPerformed(ActionEvent e)
+    		{
+    			gameUpdate.label.setText("YOU FUCKING IDIOT WHAT THE AFUFUFCKCKCK>AAAAAAAAA");
+    			Timer timer = new Timer(2000, this);
+    			timer.setInitialDelay(2000);
+    			timer.start();
+    			gameUpdate.label.setText("Haha just kidding but really you can't go into the sun");
+    		}
+    	}
+    	);
     	
 	}
 	
@@ -165,6 +205,7 @@ public class GameOutput
 		tempP.add(3,150);
 		tempP.add(4,90);
 		tempP.add(5,1000);
+		
 		tempE.add(0,100);
 		tempE.add(1,1000);
 		tempE.add(2,100);
@@ -176,12 +217,14 @@ public class GameOutput
 	}
 	public static ArrayList<Integer> randomEnemy()
 	{
-		ArrayList<Integer> randEnemyShip = new ArrayList();
+		ArrayList<Integer> randEnemyShip = new ArrayList<Integer>();
+		
 		int randShieldAbsorb = (int) (Math.random()*20+80);
 		int randShieldDurability = (int) (Math.random()*200+900);
 		int randArmor = (int) (Math.random()*30+70);
 		int randAttack = (int) (Math.random()*40+100);
 		int randAccuracy = (int) (Math.random()*20+80);
+		
 		randEnemyShip.add(0, randShieldAbsorb);
 		randEnemyShip.add(1, randShieldDurability);
 		randEnemyShip.add(2, randArmor);
