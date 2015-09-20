@@ -109,13 +109,22 @@ public class SpaceBattle
 					{
 						shieldPercent = 0;
 					}
-					atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
+					if(tempArmor<=0)
+					{
+						atkText.setText("You've won the battle!");
+						buttonPanel.setVisible(false);
+					}
+					else
+					{
+						atkText.setText("Enemy Armor: " + Math.round(tempArmor) + " \n" + "Enemy Shields: " + Math.round(shieldPercent) + "%");
+					}
 					textPanel.add(atkText,BorderLayout.SOUTH);
 					bFrame.setVisible(true);							
 				}
 				else
 				{
 					System.out.println("Finished battle. You don't need to attack.");
+					atkText.setText("You've won the battle.");
 				}
 			
 				if(pStats.get(2) > 0)
@@ -174,13 +183,22 @@ public class SpaceBattle
 					{
 						pShieldPercent = 0;
 					}
-					dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
+					if(armor<=0)
+					{
+						dfsText.setText("You've lost this one!");
+						buttonPanel.setVisible(false);
+					}
+					else
+					{
+						dfsText.setText("Ship Armor: " + Math.round(armor) + " \n" + "Shields: " + Math.round(pShieldPercent) + "%");
+					}
 					textPanel.add(dfsText,BorderLayout.SOUTH);
 					bFrame.setVisible(true);							
 				}
 				else
 				{
 					System.out.println("Finished battle. You don't need to attack.");
+					
 				}
 			}
 		
