@@ -68,6 +68,7 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
+    			w.makeSpaceShip(4, 2, mars);
     			marsGen.frame.setVisible(true);
     			uranusGen.frame.setVisible(false);
     			plutoGen.frame.setVisible(false);
@@ -91,6 +92,14 @@ public class GameOutput
     				
     			}
     			);		
+    			gameUpdate.leaveButton.addActionListener(new ActionListener()
+    			{
+    				public void actionPerformed(ActionEvent e)
+    				{
+    					w.grid[4][2].setIcon(mars);
+    					marsGen.frame.setVisible(false);
+    				}
+    			});
     		}
     	}
     	);
@@ -102,6 +111,7 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e2)
     		{
+    			w.makeSpaceShip(6, 3, uranus);
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(true);
     			plutoGen.frame.setVisible(false);
@@ -115,7 +125,16 @@ public class GameOutput
     				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
     				sb.bFrame.setVisible(true);
     			}
+    			gameUpdate.leaveButton.addActionListener(new ActionListener()
+    			{
+    				public void actionPerformed(ActionEvent e)
+    				{
+    					w.grid[6][3].setIcon(uranus);
+    					uranusGen.frame.setVisible(false);
+    				}
+    			});
     		}
+    		
     	}
     	);
     	   	
@@ -126,6 +145,7 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
+    			w.makeSpaceShip(3, 8, pluto);
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(false);
     			plutoGen.frame.setVisible(true);
@@ -139,6 +159,14 @@ public class GameOutput
     				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
     				sb.bFrame.setVisible(true);
     			}
+    			gameUpdate.leaveButton.addActionListener(new ActionListener()
+    			{
+    				public void actionPerformed(ActionEvent e)
+    				{
+    					w.grid[3][8].setIcon(pluto);
+    					plutoGen.frame.setVisible(false);
+    				}
+    			});
     		}
     	}
     	);

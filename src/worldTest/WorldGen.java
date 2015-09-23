@@ -1,6 +1,7 @@
 package worldTest;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -157,6 +158,17 @@ public class WorldGen
 			setTile(x_val, y_val, image[6]);
 		}    
     }    
+    public void makeSpaceShip(int x, int y, Icon image)
+    {
+    	ImageIcon ship = new ImageIcon(WorldGen.class.getResource("/images/spaceShip.png"));
+    	BufferedImage combined = new BufferedImage(40, 40, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = combined.createGraphics();
+		image.paintIcon(null, g, 0, 0);
+		ship.paintIcon(null, g, 0, 0);
+		
+		Icon combo = new ImageIcon(combined);
+		grid[x][y].setIcon(combo);
+    }
 }
 
 
