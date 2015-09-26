@@ -20,6 +20,6 @@ public class GameUpdates {
 		label.setFont(new Font("Serif", Font.BOLD, 24));
 		frame.add(label);
 		frame.setResizable(false);
-		frame.add(leaveButton);
+		frame.add(leaveButton, BorderLayout.EAST);
 	}
 }

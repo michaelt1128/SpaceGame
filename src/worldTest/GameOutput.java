@@ -13,7 +13,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.Timer;
 
 import gameTest.*;
 
@@ -45,6 +44,10 @@ public class GameOutput
 		WorldGen plutoGen = new WorldGen(10,10, pluto_Icons);
 		WorldGen marsGen = new WorldGen(10,10, mars_Icons);
 		
+		Dimension shipLocation = new Dimension(4,4);		
+		Dimension marsLocation = new Dimension(4,2);
+		Dimension uranusLocation = new Dimension(6,3);
+		Dimension plutoLocation = new Dimension(3,8);
 		
 		//Creates the universe object, w, and sets its location in the top center
     	WorldGen w = new WorldGen(10, 10, spc_icons);
@@ -68,7 +71,22 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
+    			if(shipLocation.equals(uranusLocation))
+    			{
+    				w.setTile(uranusLocation.width, uranusLocation.height, uranus);
+    			}
+    			else if(shipLocation.equals(plutoLocation))
+    			{
+    				w.setTile(plutoLocation.width, plutoLocation.height, pluto);
+    			}
+    			else
+    			{
+    				w.resetTile(shipLocation.width, shipLocation.height, spc_icons);
+    			}
+    			shipLocation.setSize(marsLocation.getSize());
+    			
     			w.makeSpaceShip(4, 2, mars);
+    			shipLocation.setSize(4, 2);
     			marsGen.frame.setVisible(true);
     			uranusGen.frame.setVisible(false);
     			plutoGen.frame.setVisible(false);
@@ -111,6 +129,20 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e2)
     		{
+    			if(shipLocation.equals(marsLocation))
+    			{
+    				w.setTile(marsLocation.width, marsLocation.height, mars);
+    			}
+    			else if(shipLocation.equals(plutoLocation))
+    			{
+    				w.setTile(plutoLocation.width, plutoLocation.height, pluto);
+    			}
+    			else
+    			{
+    				w.resetTile(shipLocation.width, shipLocation.height, spc_icons);
+    			}
+    			shipLocation.setSize(uranusLocation.getSize());
+    			
     			w.makeSpaceShip(6, 3, uranus);
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(true);
@@ -145,6 +177,20 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
+    			System.out.println("mars" + shipLocation.width + " " + marsLocation.width + shipLocation.height + " " + marsLocation.height);
+    			if(shipLocation.equals(uranusLocation))
+    			{
+    				w.setTile(uranusLocation.height, uranusLocation.width, uranus);
+    			}
+    			else if(shipLocation.equals(marsLocation))
+    			{
+    				w.setTile(marsLocation.width, marsLocation.height, mars);
+    			}
+    			else
+    			{
+    				w.resetTile(shipLocation.width, shipLocation.height, spc_icons);
+    			}
+    			shipLocation.setSize(plutoLocation.getSize());
     			w.makeSpaceShip(3, 8, pluto);
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(false);
@@ -184,7 +230,7 @@ public class GameOutput
     			{
     			            public void run() 
     			            {
-    			                gameUpdate.label.setText("<html><body style='width: 600px'>Oh just kidding. But you should know that the sun is very dangerous and could easily kill you... oh wait...</html>");
+    			                gameUpdate.label.setText("<html><body style='width: 500px'>Oh just kidding. But you should know that the sun is very dangerous and could easily kill you... oh wait...</html>");
     			            }
     			}
     			,2000);
@@ -195,7 +241,7 @@ public class GameOutput
     			                System.exit(0);
     			            }
     			}
-    			,5000);
+    			,4000);
     		}
     	});  	
 	}
