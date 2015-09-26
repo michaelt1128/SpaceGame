@@ -105,7 +105,7 @@ public class WorldGen
     {
     	grid[x_val][y_val].setIcon(image);
     }
-    public void resetTile(int x_val, int y_val, Icon[] image)
+    public Icon resetTile(int x_val, int y_val, Icon[] image)
     {
     	String line = "";
     	double tileValue;
@@ -131,32 +131,43 @@ public class WorldGen
     	tileValue = Double.parseDouble(realLine);
     	if(tileValue<.4)
 		{
-			grid[x_val][y_val].setIcon(image[0]);    				
+			grid[x_val][y_val].setIcon(image[0]);    
+			return image[0];
 		}
 		else if(tileValue<.5)
 		{
 			setTile(x_val, y_val, image[1]);
+			return image[1];
 		}
 		else if(tileValue<.6)
 		{
 			setTile(x_val, y_val, image[2]);
+			return image[2];
 		}
 		else if(tileValue<.7)
 		{
 			setTile(x_val, y_val, image[3]);
+			return image[3];
 		}
 		else if(tileValue<.8)
 		{
 			setTile(x_val, y_val, image[4]);
+			return image[4];
 		}
 		else if(tileValue<.9)
 		{
 			setTile(x_val, y_val, image[5]);
+			return image[5];
 		}
 		else if(tileValue<1)
 		{
 			setTile(x_val, y_val, image[6]);
+			return image[6];
 		}    
+		else
+		{
+			return null;
+		}
     }    
     public void makeSpaceShip(int x, int y, Icon image)
     {
