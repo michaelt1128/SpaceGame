@@ -120,7 +120,6 @@ public class WorldGen
 					if(x==x_val && y==y_val)
 					{
 						realLine = line;
-						System.out.println(line);
 					}
 				}
 			}

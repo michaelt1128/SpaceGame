@@ -43,10 +43,12 @@ public class GameOutput {
 	private static WorldGen marsGen = new WorldGen(10, 10, mars_Icons);
 
 	// Creates the dimension objects of planets and ships
-	private static Dimension shipLocation = new Dimension(4, 4);
-	private static Dimension marsLocation = new Dimension(4, 2);
-	private static Dimension uranusLocation = new Dimension(6, 3);
-	private static Dimension plutoLocation = new Dimension(3, 8);
+	private static int[] shipLocation = { 4, 4 };
+	private static int[] marsLocation = { 4, 2 };
+	private static int[] uranusLocation = { 6, 3 };
+	private static int[] plutoLocation = { 3, 8 };
+
+	private static GameUpdates gameUpdate = new GameUpdates();
 
 	public static void main(String[] args) {
 
@@ -59,10 +61,9 @@ public class GameOutput {
 
 		// Creates the gameUpdate object and places it below the universe object
 		// this is used for the main text of the program
-		GameUpdates gameUpdate = new GameUpdates();
 		gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY() + w.frame.getHeight() + 400);
 
-		//Starts the game
+		// Starts the game
 		welcomeText(w, gameUpdate);
 		setUpGame();
 
@@ -71,7 +72,7 @@ public class GameOutput {
 		w.grid[4][2].setToolTipText("Mars");
 		w.grid[4][2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				moveShip(marsLocation, w);
+				fancyMoveShip(marsLocation, w);
 
 				marsGen.frame.setVisible(true);
 				uranusGen.frame.setVisible(false);
@@ -107,7 +108,7 @@ public class GameOutput {
 		w.grid[6][3].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e2) {
 
-				moveShip(uranusLocation, w);
+				fancyMoveShip(uranusLocation, w);
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(true);
@@ -136,7 +137,7 @@ public class GameOutput {
 		w.grid[3][8].setToolTipText("Pluto");
 		w.grid[3][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				moveShip(plutoLocation, w);
+				fancyMoveShip(plutoLocation, w);
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(false);
@@ -162,7 +163,6 @@ public class GameOutput {
 		// Create sun tile
 		w.setTile(8, 8, sun);
 		w.grid[8][8].setToolTipText("Sun");
-
 		w.grid[8][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gameUpdate.label.setText("<html>WHAT HAVE YOU DONE??!?!? AAAAAAAAAAAAAAA-</html>");
@@ -197,6 +197,7 @@ public class GameOutput {
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				x.frame.setVisible(true);
+				moveShip(shipLocation, x);
 				frame.dispose();
 				y.frame.setVisible(true);
 			}
@@ -251,26 +252,124 @@ public class GameOutput {
 		return randEnemyShip;
 	}
 
-	public static Dimension moveShip(Dimension end, WorldGen w) {
+	public static int[] moveShip(int[] end, WorldGen w) {
 		if (shipLocation.equals(marsLocation)) {
-			w.setTile(marsLocation.width, marsLocation.height, mars);
+			w.setTile(marsLocation[0], marsLocation[1], mars);
 		} else if (shipLocation.equals(plutoLocation)) {
-			w.setTile(plutoLocation.width, plutoLocation.height, pluto);
+			w.setTile(plutoLocation[0], plutoLocation[1], pluto);
 		} else if (shipLocation.equals(uranusLocation)) {
-			w.setTile(uranusLocation.width, uranusLocation.height, uranus);
+			w.setTile(uranusLocation[0], uranusLocation[1], uranus);
 		} else {
-			w.resetTile(shipLocation.width, shipLocation.height, spc_icons);
+			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
-		shipLocation.setSize(end.getSize());
+		shipLocation = end;
 		if (end.equals(marsLocation)) {
-			w.makeSpaceShip(end.width, end.height, mars);
+			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end.equals(plutoLocation)) {
-			w.makeSpaceShip(end.width, end.height, pluto);
+			w.makeSpaceShip(end[0], end[1], pluto);
 		} else if (end.equals(uranusLocation)) {
-			w.makeSpaceShip(end.width, end.height, uranus);
+			w.makeSpaceShip(end[0], end[1], uranus);
 		} else {
-			w.makeSpaceShip(end.width, end.height, w.resetTile(end.width, end.height, spc_icons));
+			w.makeSpaceShip(end[0], end[1], w.resetTile(end[0], end[1], spc_icons));
 		}
 		return shipLocation;
+	}
+
+	public static void fancyMoveShip(int[] end, WorldGen w) {
+		int length = 10;
+		int width = 10;
+
+		// create a grid of -1s
+		int[][] distance = new int[length][width];
+		for (int i = 0; i < distance.length; i++) {
+			for (int j = 0; j < distance[i].length; j++) {
+				distance[i][j] = -1;
+			}
+		}
+		// 0 for the end position
+		distance[end[1]][end[0]] = 0;
+
+		// amount of steps from the end position
+		int steps = 1;
+
+		System.out.println("test");
+		System.out.println(shipLocation[0] + " " + shipLocation[1]);
+
+		// loop stops when it reaches the current ship location
+		while (distance[shipLocation[1]][shipLocation[0]] == -1) {
+			// loops through the y values
+			for (int i = 0; i < 10; i++) {
+				// loops through the x values
+				for (int j = 0; j < 10; j++) {
+					// checks to see if the current tile is in the path
+					if (distance[i][j] == steps - 1) {
+						// checks below
+						if (i < length - 1) {
+							// if the tile isnt marked already then we can mark
+							// it with the current amount of steps
+							if (distance[i + 1][j] == -1) {
+								distance[i + 1][j] = steps;
+							}
+						}
+						// checks above
+						if (i > 0) {
+							if (distance[i - 1][j] == -1) {
+								distance[i - 1][j] = steps;
+							}
+						}
+						// checks to the right
+						if (j < length - 1) {
+							if (distance[i][j + 1] == -1) {
+								distance[i][j + 1] = steps;
+							}
+						}
+						// checks to the left
+						if (j > 0) {
+							if (distance[i][j - 1] == -1) {
+								distance[i][j - 1] = steps;
+							}
+						}
+					}
+				}
+			}
+			steps++;
+		}
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				System.out.print(distance[i][j] + " ");
+			}
+			System.out.println();
+		}
+		int[][] path = new int[steps][2];
+		path[0][0] = shipLocation[0];
+		path[0][1] = shipLocation[1];
+		int i = 0;
+		System.out.println(path[i][1] + " " + path[i][0]);
+		while (!path[i].equals(end)) {
+			int x = path[i][0];
+			int y = path[i][1];
+			i++;
+			if (distance[x + 1][y] == distance[x][y] - 1) {
+				path[i][0] = x + 1;
+				path[i][1] = y;
+			} else if (distance[x - 1][y] == distance[x][y] - 1) {
+				path[i][0] = x - 1;
+				path[i][1] = y;
+			} else if (distance[x][y + 1] == distance[x][y] - 1) {
+				path[i][0] = x;
+				path[i][1] = y + 1;
+			} else if (distance[x][y - 1] == distance[x][y] - 1) {
+				path[i][0] = x;
+				path[i][1] = y - 1;
+			}
+			System.out.println(path[i][0] + " " + path[i][1]);
+		}
+		int[] dim = new int[2];
+		for (int j = 0; j < path.length; j++) {
+			dim[0] = path[j][0];
+			dim[1] = path[j][1];
+			moveShip(dim, w);
+			System.out.println(path[j][0] + " " + path[j][1]);
+		}
 	}
 }
