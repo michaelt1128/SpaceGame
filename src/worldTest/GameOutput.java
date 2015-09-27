@@ -47,9 +47,10 @@ public class GameOutput {
 
 	// Creates the dimension objects of planets and ships
 	private static int[] shipLocation = { 4, 4 };
-	private static int[] marsLocation = { 4, 2 };
+	private static int[] marsLocation = { 2, 1 };
 	private static int[] uranusLocation = { 6, 3 };
 	private static int[] plutoLocation = { 3, 8 };
+	private static int[] sunLocation = { 8, 8 };
 
 	private static GameUpdates gameUpdate = new GameUpdates();
 
@@ -121,10 +122,41 @@ public class GameOutput {
 			}
 		}
 		
+		class centerMoveMaker extends SwingWorker<Double, Double> {
+			@Override
+			protected Double doInBackground() throws Exception {
+				int[] center = { 4, 4 };
+				int[][] p = fancyMoveShip(center, w);
+				for(int i = 1; i<p.length; i++) {
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				return null;
+			}
+			@Override
+			protected void done() {
+				
+			}
+		}
+
+		class sunMoveMaker extends SwingWorker<Double, Double> {
+
+			@Override
+			protected Double doInBackground() throws Exception {
+				int[][] p = fancyMoveShip(sunLocation, w);
+				for(int i = 1; i<p.length; i++) {
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				System.exit(0);
+				return null;
+			}
+			
+		}
 		// Create the mars tile and open mars map
-		w.setTile(4, 2, mars);
-		w.grid[4][2].setToolTipText("Mars");
-		w.grid[4][2].addActionListener(new ActionListener() {
+		w.setTile(marsLocation[0], marsLocation[1], mars);
+		w.grid[marsLocation[0]][marsLocation[1]].setToolTipText("Mars");
+		w.grid[marsLocation[0]][marsLocation[1]].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
 				new marsMoveMaker().execute();
 
@@ -149,8 +181,9 @@ public class GameOutput {
 				});
 				gameUpdate.leaveButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						w.grid[4][2].setIcon(mars);
+						w.grid[marsLocation[0]][marsLocation[1]].setIcon(mars);
 						marsGen.frame.setVisible(false);
+						new centerMoveMaker().execute();
 					}
 				});
 			}
@@ -179,6 +212,7 @@ public class GameOutput {
 					public void actionPerformed(ActionEvent e) {
 						w.grid[6][3].setIcon(uranus);
 						uranusGen.frame.setVisible(false);
+						new centerMoveMaker().execute();
 					}
 				});
 			}
@@ -209,6 +243,7 @@ public class GameOutput {
 					public void actionPerformed(ActionEvent e) {
 						w.grid[3][8].setIcon(pluto);
 						plutoGen.frame.setVisible(false);
+						new centerMoveMaker().execute();
 					}
 				});
 			}
@@ -219,7 +254,7 @@ public class GameOutput {
 		w.grid[8][8].setToolTipText("Sun");
 		w.grid[8][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gameUpdate.label.setText("<html>WHAT HAVE YOU DONE??!?!? AAAAAAAAAAAAAAA-</html>");
+				/*gameUpdate.label.setText("<html>WHAT HAVE YOU DONE??!?!? AAAAAAAAAAAAAAA-</html>");
 				new java.util.Timer().schedule(new java.util.TimerTask() {
 					public void run() {
 						gameUpdate.label.setText(
@@ -230,7 +265,8 @@ public class GameOutput {
 					public void run() {
 						System.exit(0);
 					}
-				}, 4000);
+				}, 4000);*/
+				new sunMoveMaker().execute();
 			}
 		});
 	}
@@ -304,11 +340,11 @@ public class GameOutput {
 	}
 
 	public static int[] moveShip(int[] end, WorldGen w) {
-		if (shipLocation.equals(marsLocation)) {
+		if (shipLocation[0] == marsLocation[0] && shipLocation[1] == marsLocation[1]) {
 			w.setTile(marsLocation[0], marsLocation[1], mars);
-		} else if (shipLocation.equals(plutoLocation)) {
+		} else if (shipLocation[0] == plutoLocation[0] && shipLocation[1] == plutoLocation[1]) {
 			w.setTile(plutoLocation[0], plutoLocation[1], pluto);
-		} else if (shipLocation.equals(uranusLocation)) {
+		} else if (shipLocation[0] == uranusLocation[0] && shipLocation[1] == uranusLocation[1]) {
 			w.setTile(uranusLocation[0], uranusLocation[1], uranus);
 		} else {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
@@ -318,12 +354,12 @@ public class GameOutput {
 		shipLocation = end.clone();
 		System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
 		System.out.println("end: " + end[0] + " " + end[1]);
-		if (end.equals(marsLocation)) {
+		if (end[0] == marsLocation[0] && end[1] == marsLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], mars);
-		} else if (end.equals(plutoLocation)) {
+		} else if (end[0] == plutoLocation[0] && end[1] == plutoLocation[1]) {
 			System.out.println("works");
 			w.makeSpaceShip(end[0], end[1], pluto);
-		} else if (end.equals(uranusLocation)) {
+		} else if (end[0] == uranusLocation[0] && end[1] == uranusLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], uranus);
 		} else {
 			System.out.println("space");
