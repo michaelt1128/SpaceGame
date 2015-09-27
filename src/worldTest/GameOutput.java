@@ -392,6 +392,8 @@ public class GameOutput
 	}
 
 	public static void fancyMoveShip(int[] end, WorldGen w) {
+		//end[0] = y
+		//end[1] = x
 		int length = 10;
 		int width = 10;
 
@@ -445,7 +447,8 @@ public class GameOutput
 								distance[i][j - 1] = steps;
 							}
 						}
-					}
+					}	
+					
 				}
 			}
 			steps++;
@@ -460,21 +463,21 @@ public class GameOutput
 		path[0][0] = shipLocation[0];
 		path[0][1] = shipLocation[1];
 		int i = 0;
-		System.out.println(path[i][1] + " " + path[i][0]);
+		System.out.println(path[i][0] + " " + path[i][1]);
 		while (!path[i].equals(end)) {
 			int x = path[i][0];
 			int y = path[i][1];
 			i++;
-			if (distance[x + 1][y] == distance[x][y] - 1) {
+			if (distance[y + 1][x] == distance[y][x] - 1) {
 				path[i][0] = x + 1;
 				path[i][1] = y;
-			} else if (distance[x - 1][y] == distance[x][y] - 1) {
+			} else if (distance[y - 1][x] == distance[y][x] - 1) {
 				path[i][0] = x - 1;
 				path[i][1] = y;
-			} else if (distance[x][y + 1] == distance[x][y] - 1) {
+			} else if (distance[y][x + 1] == distance[y][x] - 1) {
 				path[i][0] = x;
 				path[i][1] = y + 1;
-			} else if (distance[x][y - 1] == distance[x][y] - 1) {
+			} else if (distance[y][x - 1] == distance[y][x] - 1) {
 				path[i][0] = x;
 				path[i][1] = y - 1;
 			}
