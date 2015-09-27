@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,8 +17,7 @@ import javax.swing.JLabel;
 
 import gameTest.*;
 
-public class GameOutput
-	{
+public class GameOutput {
 	// arraylists to store values for the ship battle
 	public static ArrayList<Integer> tempP = new ArrayList<Integer>();
 	public static ArrayList<Integer> tempE = new ArrayList<Integer>();
@@ -67,126 +67,105 @@ public class GameOutput
 		// Starts the game
 		welcomeText(w, gameUpdate);
 		setUpGame();
-    	
-    	//Create the mars tile and open mars map
-    	w.setTile(4, 2, mars);
-    	w.grid[4][2].setToolTipText("Mars");
-    	w.grid[4][2].addActionListener(new ActionListener()
-    	{
-    		public void actionPerformed(ActionEvent e1)
-    		{
 
-    			marsGen.frame.setVisible(true);
-    			uranusGen.frame.setVisible(false);
-    			plutoGen.frame.setVisible(false);
-    			
-    			marsGen.frame.setTitle("Mars");
-    			marsGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
-    			if(Math.random()<.65)
-    			{
-    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-    				sb.bFrame.setVisible(true);
-    			}
-    			marsGen.setTile(3, 3, marsBase0);
-    			marsGen.grid[3][3].addActionListener(new ActionListener()
-    			{
-    				public void actionPerformed(ActionEvent e2)
-    				{
-    					WorldGen marsBaseMap = new WorldGen(10,10, uranus_Icons);
-    					marsBaseMap.frame.setVisible(true);
-    				}
-    				
-    			}
-    			);		
-    			gameUpdate.leaveButton.addActionListener(new ActionListener()
-    			{
-    				public void actionPerformed(ActionEvent e)
-    				{
-    					w.grid[4][2].setIcon(mars);
-    					marsGen.frame.setVisible(false);
-    					
-    				}
-    			});
-    		}
-    	}
-    	);
-    	
-    	//Create the uranus tile and open uranus map
-       	w.setTile(6, 3, uranus);
-    	w.grid[6][3].setToolTipText("Uranus");    	
-    	w.grid[6][3].addActionListener(new ActionListener()
-    	{
-    		public void actionPerformed(ActionEvent e2)
-    		{
-    		
-    			//create and if statement here that will check if the spaceship is anywhere other than null meaning not in the grid then
-    			//tell the user "You must leave the planet to go to another one".
-    			
-    			marsGen.frame.setVisible(false);
-    			uranusGen.frame.setVisible(true);
-    			plutoGen.frame.setVisible(false);
-    			
-    			uranusGen.frame.setTitle("Uranus");
-    			uranusGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
-    			
-    			if(Math.random()<.65)
-    			{
-    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-    				sb.bFrame.setVisible(true);
-    			}
-    			gameUpdate.leaveButton.addActionListener(new ActionListener()
-    			{
-    				public void actionPerformed(ActionEvent e)
-    				{
-    					w.grid[6][3].setIcon(uranus);
-    					uranusGen.frame.setVisible(false);
-    				}
-    			});
-    		}
-    		
-    	}
-    	);
-    	   	
-    	//Create the pluto tile and open map
-    	w.setTile(3, 8, pluto);   	
-    	w.grid[3][8].setToolTipText("Pluto");
-    	w.grid[3][8].addActionListener(new ActionListener()
-    	{
-    		public void actionPerformed(ActionEvent e1)
-    		{
- 	
-    			marsGen.frame.setVisible(false);
-    			uranusGen.frame.setVisible(false);
-    			plutoGen.frame.setVisible(true);
-    			
-    			plutoGen.frame.setTitle("Pluto");
-    			plutoGen.frame.setLocation(w.frame.getX()+ w.frame.getWidth(), w.frame.getY());
-    			
-    			if(Math.random()<.65)
-    			{
-    				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-    				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-    				sb.bFrame.setVisible(true);
-    			}
-    			gameUpdate.leaveButton.addActionListener(new ActionListener()
-    			{
-    				public void actionPerformed(ActionEvent e)
-    				{
-    					w.grid[3][8].setIcon(pluto);
-    					plutoGen.frame.setVisible(false);
-    				}
-    			});
-    		}
-    	}
-    	);
-    	
-    	
-    	//Create sun tile
-    	w.setTile(8, 8, sun);
-    	w.grid[8][8].setToolTipText("Sun");
+		// Create the mars tile and open mars map
+		w.setTile(4, 2, mars);
+		w.grid[4][2].setToolTipText("Mars");
+		w.grid[4][2].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e1) {
 
+				marsGen.frame.setVisible(true);
+				uranusGen.frame.setVisible(false);
+				plutoGen.frame.setVisible(false);
+
+				marsGen.frame.setTitle("Mars");
+				marsGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
+				if (Math.random() < .65) {
+					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					sb.bFrame.setVisible(true);
+				}
+				marsGen.setTile(3, 3, marsBase0);
+				marsGen.grid[3][3].addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e2) {
+						WorldGen marsBaseMap = new WorldGen(10, 10, uranus_Icons);
+						marsBaseMap.frame.setVisible(true);
+					}
+
+				});
+				gameUpdate.leaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						w.grid[4][2].setIcon(mars);
+						marsGen.frame.setVisible(false);
+
+					}
+				});
+			}
+		});
+
+		// Create the uranus tile and open uranus map
+		w.setTile(6, 3, uranus);
+		w.grid[6][3].setToolTipText("Uranus");
+		w.grid[6][3].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e2) {
+
+				// create and if statement here that will check if the spaceship
+				// is anywhere other than null meaning not in the grid then
+				// tell the user "You must leave the planet to go to another
+				// one".
+
+				marsGen.frame.setVisible(false);
+				uranusGen.frame.setVisible(true);
+				plutoGen.frame.setVisible(false);
+
+				uranusGen.frame.setTitle("Uranus");
+				uranusGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
+
+				if (Math.random() < .65) {
+					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					sb.bFrame.setVisible(true);
+				}
+				gameUpdate.leaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						w.grid[6][3].setIcon(uranus);
+						uranusGen.frame.setVisible(false);
+					}
+				});
+			}
+
+		});
+
+		// Create the pluto tile and open map
+		w.setTile(3, 8, pluto);
+		w.grid[3][8].setToolTipText("Pluto");
+		w.grid[3][8].addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e1) {
+
+				marsGen.frame.setVisible(false);
+				uranusGen.frame.setVisible(false);
+				plutoGen.frame.setVisible(true);
+
+				plutoGen.frame.setTitle("Pluto");
+				plutoGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
+
+				if (Math.random() < .65) {
+					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					sb.bFrame.setVisible(true);
+				}
+				gameUpdate.leaveButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						w.grid[3][8].setIcon(pluto);
+						plutoGen.frame.setVisible(false);
+					}
+				});
+			}
+		});
+
+		// Create sun tile
+		w.setTile(8, 8, sun);
+		w.grid[8][8].setToolTipText("Sun");
 
 		// Create the mars tile and open mars map
 		w.setTile(4, 2, mars);
@@ -337,14 +316,14 @@ public class GameOutput
 	public static void setUpGame() {
 		PlayerShip pShip = new PlayerShip();
 		EnemyShip eShip = new EnemyShip();
-		
-		tempP.add(0,100);
-		tempP.add(1,1000);
-		tempP.add(2,100);
-		tempP.add(3,150);
-		tempP.add(4,90);
-		tempP.add(5,1000);
-		
+
+		tempP.add(0, 100);
+		tempP.add(1, 1000);
+		tempP.add(2, 100);
+		tempP.add(3, 150);
+		tempP.add(4, 90);
+		tempP.add(5, 1000);
+
 		pShip.setShipStats(tempP);
 		eShip.setShipStats(randomEnemy());
 	}
@@ -392,8 +371,8 @@ public class GameOutput
 	}
 
 	public static void fancyMoveShip(int[] end, WorldGen w) {
-		//end[0] = y
-		//end[1] = x
+		// end[0] = y
+		// end[1] = x
 		int length = 10;
 		int width = 10;
 
@@ -447,8 +426,8 @@ public class GameOutput
 								distance[i][j - 1] = steps;
 							}
 						}
-					}	
-					
+					}
+
 				}
 			}
 			steps++;
@@ -464,22 +443,23 @@ public class GameOutput
 		path[0][1] = shipLocation[1];
 		int i = 0;
 		System.out.println(path[i][0] + " " + path[i][1]);
-		while (!path[i].equals(end)) {
+		while (!Arrays.equals(path[i], end)) {
 			int x = path[i][0];
 			int y = path[i][1];
 			i++;
 			if (distance[y + 1][x] == distance[y][x] - 1) {
-				path[i][0] = x + 1;
-				path[i][1] = y;
-			} else if (distance[y - 1][x] == distance[y][x] - 1) {
-				path[i][0] = x - 1;
-				path[i][1] = y;
-			} else if (distance[y][x + 1] == distance[y][x] - 1) {
 				path[i][0] = x;
 				path[i][1] = y + 1;
-			} else if (distance[y][x - 1] == distance[y][x] - 1) {
+			} else if (distance[y - 1][x] == distance[y][x] - 1) {
 				path[i][0] = x;
 				path[i][1] = y - 1;
+			}
+			if (distance[y][x + 1] == distance[y][x] - 1) {
+				path[i][0] = x + 1;
+				path[i][1] = y;
+			} else if (distance[y][x - 1] == distance[y][x] - 1) {
+				path[i][0] = x - 1;
+				path[i][1] = y;
 			}
 			System.out.println(path[i][0] + " " + path[i][1]);
 		}
