@@ -357,7 +357,9 @@ public class GameOutput {
 		} else {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
+		System.out.println("before: " + shipLocation[0] + " " + shipLocation[1]);
 		shipLocation = end;
+		System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
 		if (end.equals(marsLocation)) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end.equals(plutoLocation)) {
