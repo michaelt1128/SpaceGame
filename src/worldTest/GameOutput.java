@@ -237,7 +237,7 @@ public class GameOutput {
 		w.grid[3][8].setToolTipText("Pluto");
 		w.grid[3][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				moveShip(plutoLocation, w);
+				fancyMoveShip(plutoLocation, w);
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(false);
