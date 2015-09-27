@@ -323,6 +323,7 @@ public class GameOutput {
 		tempP.add(3, 150);
 		tempP.add(4, 90);
 		tempP.add(5, 1000);
+		tempP.add(6, 2000);
 
 		pShip.setShipStats(tempP);
 		eShip.setShipStats(randomEnemy());
@@ -336,13 +337,14 @@ public class GameOutput {
 		int randArmor = (int) (Math.random() * 30 + 70);
 		int randAttack = (int) (Math.random() * 40 + 100);
 		int randAccuracy = (int) (Math.random() * 20 + 80);
-
+		int randLoot = (int) (Math.random() * 50 + 200);
 		randEnemyShip.add(0, randShieldAbsorb);
 		randEnemyShip.add(1, randShieldDurability);
 		randEnemyShip.add(2, randArmor);
 		randEnemyShip.add(3, randAttack);
 		randEnemyShip.add(4, randAccuracy);
 		randEnemyShip.add(5, randShieldDurability);
+		randEnemyShip.add(6, randLoot);
 
 		return randEnemyShip;
 	}

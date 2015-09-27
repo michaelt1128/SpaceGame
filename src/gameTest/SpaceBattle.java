@@ -52,6 +52,10 @@ public class SpaceBattle
 		textPanel.setBackground(Color.WHITE);
 		bFrame.setBackground(Color.BLACK);
 		bFrame.setLayout(new BorderLayout());
+	
+		JLabel outcome = new JLabel();
+		outcome.setFont(new Font("Serif", Font.BOLD, 30));
+		
 		JLabel turnNum = new JLabel("Turn " + turnCount);
 		mainPanel.add(turnNum, BorderLayout.PAGE_START);
 		mainPanel.add(buttonPanel, BorderLayout.CENTER);
@@ -59,6 +63,7 @@ public class SpaceBattle
 		
 		bFrame.setSize(800,400);
 		bFrame.setVisible(true);
+		
 		
 		JButton attackButton = new JButton("Attack");
 		JLabel atkText = new JLabel();
@@ -137,8 +142,11 @@ public class SpaceBattle
 					}
 					if(tempArmor<=0)
 					{
-						atkText.setText("You've won the battle!");
+						bFrame.getContentPane().removeAll();
+						outcome.setText("Enemey ship has been annihilated!");
+						bFrame.add(outcome, BorderLayout.CENTER);
 						buttonPanel.setVisible(false);
+						bFrame.setVisible(true);
 						hasWon = true;
 					}
 					else
@@ -213,7 +221,10 @@ public class SpaceBattle
 					if(armor<=0)
 					{
 						dfsText.setText("You've lost this one!");
-						buttonPanel.setVisible(false);
+						outcome.setText("GAME OVER");
+						bFrame.getContentPane().removeAll();
+						bFrame.add(outcome,BorderLayout.CENTER);
+						bFrame.setVisible(true);
 						hasLost = true;
 					}
 					else
