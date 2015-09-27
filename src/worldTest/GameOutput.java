@@ -237,7 +237,7 @@ public class GameOutput {
 		w.grid[3][8].setToolTipText("Pluto");
 		w.grid[3][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				fancyMoveShip(plutoLocation, w);
+				moveShip(plutoLocation, w);
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(false);
@@ -357,14 +357,16 @@ public class GameOutput {
 		} else {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
-		shipLocation = end;
+		shipLocation = end.clone();
 		if (end.equals(marsLocation)) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end.equals(plutoLocation)) {
+			System.out.println("works");
 			w.makeSpaceShip(end[0], end[1], pluto);
 		} else if (end.equals(uranusLocation)) {
 			w.makeSpaceShip(end[0], end[1], uranus);
 		} else {
+			System.out.println("space");
 			w.makeSpaceShip(end[0], end[1], w.resetTile(end[0], end[1], spc_icons));
 		}
 		return shipLocation;
@@ -438,15 +440,17 @@ public class GameOutput {
 			}
 			System.out.println();
 		}
-		int stepCount = Math.max(Math.abs(shipLocation[0]-end[0]), Math.abs(shipLocation[1]-end[1])) + 1;
+		int stepCount = Math.max(Math.abs(shipLocation[0] - end[0]), Math.abs(shipLocation[1] - end[1])) + 1;
 		int[][] path = new int[stepCount][2];
 		path[0][0] = shipLocation[0];
 		path[0][1] = shipLocation[1];
+		
 		int i = 0;
 		System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		while (!Arrays.equals(path[i], end)) {
 			int x = path[i][0];
 			int y = path[i][1];
+			System.out.println(i);
 			i++;
 			if (distance[y + 1][x] == distance[y][x] - 1) {
 				path[i][0] = x;
@@ -467,15 +471,18 @@ public class GameOutput {
 			System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		}
 		int[] dim = new int[2];
-		for (int j = 0; j < path.length - 0; j++) {
+		for (int j = 0; j < stepCount; j++) {
 			dim[0] = path[j][0];
 			dim[1] = path[j][1];
+			System.out.println(path[j][0] + " " + path[j][1]);
+			moveShip(path[j], w);
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-			new java.util.Timer().schedule(new java.util.TimerTask() {
-				public void run() {
-					moveShip(dim, w);
-				}
-			}, 500);
 			
 			System.out.println("traveling: " + dim[0] + " " + dim[1]);
 		}
