@@ -438,11 +438,12 @@ public class GameOutput {
 			}
 			System.out.println();
 		}
-		int[][] path = new int[steps][2];
+		int stepCount = Math.max(Math.abs(shipLocation[0]-end[0]), Math.abs(shipLocation[1]-end[1])) + 1;
+		int[][] path = new int[stepCount][2];
 		path[0][0] = shipLocation[0];
 		path[0][1] = shipLocation[1];
 		int i = 0;
-		System.out.println(path[i][0] + " " + path[i][1]);
+		System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		while (!Arrays.equals(path[i], end)) {
 			int x = path[i][0];
 			int y = path[i][1];
@@ -454,6 +455,8 @@ public class GameOutput {
 				path[i][0] = x;
 				path[i][1] = y - 1;
 			}
+			x = path[i][0];
+			y = path[i][1];
 			if (distance[y][x + 1] == distance[y][x] - 1) {
 				path[i][0] = x + 1;
 				path[i][1] = y;
@@ -461,14 +464,20 @@ public class GameOutput {
 				path[i][0] = x - 1;
 				path[i][1] = y;
 			}
-			System.out.println(path[i][0] + " " + path[i][1]);
+			System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		}
 		int[] dim = new int[2];
-		for (int j = 0; j < path.length; j++) {
+		for (int j = 0; j < path.length - 0; j++) {
 			dim[0] = path[j][0];
 			dim[1] = path[j][1];
-			moveShip(dim, w);
-			System.out.println(path[j][0] + " " + path[j][1]);
+
+			new java.util.Timer().schedule(new java.util.TimerTask() {
+				public void run() {
+					moveShip(dim, w);
+				}
+			}, 500);
+			
+			System.out.println("traveling: " + dim[0] + " " + dim[1]);
 		}
 	}
 }
