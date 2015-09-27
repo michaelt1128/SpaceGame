@@ -9,6 +9,8 @@ import javax.swing.*;
 import worldTest.WorldGen;
 public class SpaceBattle 
 {
+	public boolean hasWon = false;
+	public boolean hasLost = false;
 	public int turnCount = 1;
 	public int buttonCount = 0;
 	public JFrame bFrame = new JFrame("Space Battle");
@@ -137,6 +139,7 @@ public class SpaceBattle
 					{
 						atkText.setText("You've won the battle!");
 						buttonPanel.setVisible(false);
+						hasWon = true;
 					}
 					else
 					{
@@ -148,11 +151,10 @@ public class SpaceBattle
 				}
 				else
 				{
-					System.out.println("Finished battle. You don't need to attack.");
 					atkText.setText("You've won the battle.");
 				}
 			
-				if(pStats.get(2) > 0)
+				if(pStats.get(2) > 0 && hasWon == false)
 				{
 					double shieldAbsorb = (double)pStats.get(0);
 					double shieldDurability = (double)pStats.get(1);
@@ -212,6 +214,7 @@ public class SpaceBattle
 					{
 						dfsText.setText("You've lost this one!");
 						buttonPanel.setVisible(false);
+						hasLost = true;
 					}
 					else
 					{
@@ -225,7 +228,27 @@ public class SpaceBattle
 					System.out.println("Finished battle. You don't need to attack.");
 					
 				}
+				if(hasWon == true || hasLost == true)
+				{
+					new java.util.Timer().schedule(new java.util.TimerTask() 
+	    			{
+	    			            public void run() 
+	    			            {
+	    			                
+	    			            }
+	    			}
+	    			,2000);
+	    			new java.util.Timer().schedule(new java.util.TimerTask() 
+	    			{
+	    			            public void run() 
+	    			            {
+	    			                bFrame.dispose();
+	    			            }
+	    			}
+	    			,5000);
+				}
 			}
+			
 		
 		});
 		

@@ -19,6 +19,7 @@ import gameTest.*;
 
 public class GameOutput 
 {
+	public static boolean shipInSpace = true;
 	//arraylists to store values for the ship battle
 	public static ArrayList<Integer> tempP = new ArrayList<Integer>();
 	public static ArrayList<Integer> tempE = new ArrayList<Integer>();
@@ -68,7 +69,15 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
-    			w.makeSpaceShip(4, 2, mars);
+    			if(shipInSpace)
+    			{
+    				w.makeSpaceShip(4, 2, mars);
+    				shipInSpace = false;
+    			}	
+    			else
+    			{
+    				System.out.print("You need to leave the planet you are on first!");
+    			}
     			marsGen.frame.setVisible(true);
     			uranusGen.frame.setVisible(false);
     			plutoGen.frame.setVisible(false);
@@ -98,6 +107,7 @@ public class GameOutput
     				{
     					w.grid[4][2].setIcon(mars);
     					marsGen.frame.setVisible(false);
+    					shipInSpace = true;
     				}
     			});
     		}
@@ -111,7 +121,20 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e2)
     		{
-    			w.makeSpaceShip(6, 3, uranus);
+    		
+    			//create and if statement here that will check if the spaceship is anywhere other than null meaning not in the grid then
+    			//tell the user "You must leave the planet to go to another one".
+    			if(shipInSpace)
+    			{
+    				w.makeSpaceShip(6, 3, uranus);
+    				shipInSpace = false;
+    			}	
+    			else
+    			{
+    				System.out.print("You need to leave the planet you are on first!");
+    			}
+    				
+    			
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(true);
     			plutoGen.frame.setVisible(false);
@@ -131,6 +154,7 @@ public class GameOutput
     				{
     					w.grid[6][3].setIcon(uranus);
     					uranusGen.frame.setVisible(false);
+    					shipInSpace = true;
     				}
     			});
     		}
@@ -145,7 +169,16 @@ public class GameOutput
     	{
     		public void actionPerformed(ActionEvent e1)
     		{
-    			w.makeSpaceShip(3, 8, pluto);
+    			if(shipInSpace)
+    			{
+    				w.makeSpaceShip(3, 8, pluto);
+    				shipInSpace = false;
+    			}
+    			else
+    			{
+    				System.out.println("You need to leave the planet you are on first!");
+    			}
+    			
     			marsGen.frame.setVisible(false);
     			uranusGen.frame.setVisible(false);
     			plutoGen.frame.setVisible(true);
@@ -165,6 +198,7 @@ public class GameOutput
     				{
     					w.grid[3][8].setIcon(pluto);
     					plutoGen.frame.setVisible(false);
+    					shipInSpace = true;
     				}
     			});
     		}
@@ -237,6 +271,7 @@ public class GameOutput
 	{
 		PlayerShip pShip = new PlayerShip();
 		EnemyShip eShip = new EnemyShip();
+		
 		tempP.add(0,100);
 		tempP.add(1,1000);
 		tempP.add(2,100);
@@ -244,14 +279,8 @@ public class GameOutput
 		tempP.add(4,90);
 		tempP.add(5,1000);
 		
-		tempE.add(0,100);
-		tempE.add(1,1000);
-		tempE.add(2,100);
-		tempE.add(3,130);
-		tempE.add(4,90);
-		tempE.add(5,1000);
 		pShip.setShipStats(tempP);
-		eShip.setShipStats(tempE);
+		eShip.setShipStats(randomEnemy());
 	}
 	public static ArrayList<Integer> randomEnemy()
 	{
