@@ -2,6 +2,7 @@ package worldTest;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingWorker;
 
 import gameTest.*;
 
@@ -67,7 +69,58 @@ public class GameOutput {
 		// Starts the game
 		welcomeText(w, gameUpdate);
 		setUpGame();
-
+		
+		class plutoMoveMaker extends SwingWorker<Double, Double> { 
+			@Override
+			protected Double doInBackground() throws Exception {
+				// TODO Auto-generated method stub
+				int[][] p = fancyMoveShip(plutoLocation, w);
+				for(int i = 1; i<p.length; i++){
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				return null;
+			}
+			@Override
+			protected void done() {
+				
+			}
+		}
+		
+		class marsMoveMaker extends SwingWorker<Double, Double> { 
+			@Override
+			protected Double doInBackground() throws Exception {
+				// TODO Auto-generated method stub
+				int[][] p = fancyMoveShip(marsLocation, w);
+				for(int i = 1; i<p.length; i++){
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				return null;
+			}
+			@Override
+			protected void done() {
+				
+			}
+		}
+		
+		class uranusMoveMaker extends SwingWorker<Double, Double> { 
+			@Override
+			protected Double doInBackground() throws Exception {
+				// TODO Auto-generated method stub
+				int[][] p = fancyMoveShip(uranusLocation, w);
+				for(int i = 1; i<p.length; i++){
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				return null;
+			}
+			@Override
+			protected void done() {
+				
+			}
+		}
+		
 		// Create the mars tile and open mars map
 		w.setTile(4, 2, mars);
 		w.grid[4][2].setToolTipText("Mars");
@@ -172,7 +225,7 @@ public class GameOutput {
 		w.grid[4][2].setToolTipText("Mars");
 		w.grid[4][2].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				fancyMoveShip(marsLocation, w);
+				new marsMoveMaker().execute();
 
 				marsGen.frame.setVisible(true);
 				uranusGen.frame.setVisible(false);
@@ -207,8 +260,7 @@ public class GameOutput {
 		w.grid[6][3].setToolTipText("Uranus");
 		w.grid[6][3].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e2) {
-
-				fancyMoveShip(uranusLocation, w);
+				new uranusMoveMaker().execute();
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(true);
@@ -231,13 +283,14 @@ public class GameOutput {
 			}
 
 		});
-
+		
+		
 		// Create the pluto tile and open map
 		w.setTile(3, 8, pluto);
 		w.grid[3][8].setToolTipText("Pluto");
 		w.grid[3][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
-				fancyMoveShip(plutoLocation, w);
+				new plutoMoveMaker().execute();
 
 				marsGen.frame.setVisible(false);
 				uranusGen.frame.setVisible(false);
@@ -359,7 +412,11 @@ public class GameOutput {
 		} else {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
+		
+		System.out.println("before: " + shipLocation[0] + " " + shipLocation[1]);
 		shipLocation = end.clone();
+		System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
+		System.out.println("end: " + end[0] + " " + end[1]);
 		if (end.equals(marsLocation)) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end.equals(plutoLocation)) {
@@ -374,7 +431,7 @@ public class GameOutput {
 		return shipLocation;
 	}
 
-	public static void fancyMoveShip(int[] end, WorldGen w) {
+	public static int[][] fancyMoveShip(int[] end, WorldGen w) {
 		// end[0] = y
 		// end[1] = x
 		int length = 10;
@@ -472,21 +529,8 @@ public class GameOutput {
 			}
 			System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		}
-		int[] dim = new int[2];
-		for (int j = 0; j < stepCount; j++) {
-			dim[0] = path[j][0];
-			dim[1] = path[j][1];
-			System.out.println(path[j][0] + " " + path[j][1]);
-			moveShip(path[j], w);
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			
-			System.out.println("traveling: " + dim[0] + " " + dim[1]);
-		}
+		return path;
 	}
+	
+	
 }
