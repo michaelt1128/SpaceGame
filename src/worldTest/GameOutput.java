@@ -2,7 +2,6 @@ package worldTest;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -26,11 +25,11 @@ public class GameOutput {
 	public static boolean gameState = true;
 
 	// declares and initializes the images used on maps
-	private static Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
-	private static Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
-	private static Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
-	private static Icon marsBase0 = new ImageIcon(WorldGen.class.getResource("/images/marsBase0.png"));
-	private static Icon pluto = new ImageIcon(WorldGen.class.getResource("/images/pluto.png"));
+	private static final Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
+	private static final Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
+	private static final Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
+	private static final Icon marsBase0 = new ImageIcon(WorldGen.class.getResource("/images/marsBase0.png"));
+	private static final Icon pluto = new ImageIcon(WorldGen.class.getResource("/images/pluto.png"));
 
 	// Creates the iconCreator object and all of the icon arrays used in the
 	// maps
@@ -47,13 +46,12 @@ public class GameOutput {
 
 	// Creates the dimension objects of planets and ships
 	private static int[] shipLocation = { 4, 4 };
-	private static int[] marsLocation = { 2, 1 };
-	private static int[] uranusLocation = { 6, 3 };
-	private static int[] plutoLocation = { 3, 8 };
-	private static int[] sunLocation = { 8, 8 };
-
-	private static GameUpdates gameUpdate = new GameUpdates();
-
+	private static final int[] marsLocation = { 2, 1 };
+	private static final int[] uranusLocation = { 6, 3 };
+	private static final int[] plutoLocation = { 3, 8 };
+	private static final int[] sunLocation = { 8, 8 };
+	private static final int[] centerLocation = { 4, 4 };
+	
 	public static void main(String[] args) {
 
 		// Creates the universe object, w, and sets its location in the top
@@ -62,19 +60,13 @@ public class GameOutput {
 		w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		w.frame.setLocation(dim.width / 2 - w.frame.getSize().width, 0);
-
-		// Creates the gameUpdate object and places it below the universe object
-		// this is used for the main text of the program
-		gameUpdate.frame.setLocation(w.frame.getX(), w.frame.getY() + w.frame.getHeight() + 400);
-
 		// Starts the game
-		welcomeText(w, gameUpdate);
+		welcomeText(w);
 		setUpGame();
 		
 		class plutoMoveMaker extends SwingWorker<Double, Double> { 
 			@Override
 			protected Double doInBackground() throws Exception {
-				// TODO Auto-generated method stub
 				int[][] p = fancyMoveShip(plutoLocation, w);
 				for(int i = 1; i<p.length; i++){
 					moveShip(p[i], w);
@@ -108,7 +100,6 @@ public class GameOutput {
 		class uranusMoveMaker extends SwingWorker<Double, Double> { 
 			@Override
 			protected Double doInBackground() throws Exception {
-				// TODO Auto-generated method stub
 				int[][] p = fancyMoveShip(uranusLocation, w);
 				for(int i = 1; i<p.length; i++){
 					moveShip(p[i], w);
@@ -121,24 +112,6 @@ public class GameOutput {
 				
 			}
 		}
-		
-		class centerMoveMaker extends SwingWorker<Double, Double> {
-			@Override
-			protected Double doInBackground() throws Exception {
-				int[] center = { 4, 4 };
-				int[][] p = fancyMoveShip(center, w);
-				for(int i = 1; i<p.length; i++) {
-					moveShip(p[i], w);
-					Thread.sleep(500);
-				}
-				return null;
-			}
-			@Override
-			protected void done() {
-				
-			}
-		}
-
 		class sunMoveMaker extends SwingWorker<Double, Double> {
 
 			@Override
@@ -179,13 +152,6 @@ public class GameOutput {
 					}
 
 				});
-				gameUpdate.leaveButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						w.grid[marsLocation[0]][marsLocation[1]].setIcon(mars);
-						marsGen.frame.setVisible(false);
-						new centerMoveMaker().execute();
-					}
-				});
 			}
 		});
 
@@ -208,13 +174,6 @@ public class GameOutput {
 					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
 					sb.bFrame.setVisible(true);
 				}
-				gameUpdate.leaveButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						w.grid[6][3].setIcon(uranus);
-						uranusGen.frame.setVisible(false);
-						new centerMoveMaker().execute();
-					}
-				});
 			}
 
 		});
@@ -239,13 +198,6 @@ public class GameOutput {
 					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
 					sb.bFrame.setVisible(true);
 				}
-				gameUpdate.leaveButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						w.grid[3][8].setIcon(pluto);
-						plutoGen.frame.setVisible(false);
-						new centerMoveMaker().execute();
-					}
-				});
 			}
 		});
 
@@ -254,24 +206,12 @@ public class GameOutput {
 		w.grid[8][8].setToolTipText("Sun");
 		w.grid[8][8].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*gameUpdate.label.setText("<html>WHAT HAVE YOU DONE??!?!? AAAAAAAAAAAAAAA-</html>");
-				new java.util.Timer().schedule(new java.util.TimerTask() {
-					public void run() {
-						gameUpdate.label.setText(
-								"<html><body style='width: 500px'>Oh just kidding. But you should know that the sun is very dangerous and could easily kill you... oh wait...</html>");
-					}
-				}, 2000);
-				new java.util.Timer().schedule(new java.util.TimerTask() {
-					public void run() {
-						System.exit(0);
-					}
-				}, 4000);*/
 				new sunMoveMaker().execute();
 			}
 		});
 	}
 
-	public static void welcomeText(WorldGen x, GameUpdates y) {
+	public static void welcomeText(WorldGen x) {
 		JFrame frame = new JFrame("Space Game");
 		frame.setLayout(new BorderLayout());
 
@@ -287,9 +227,8 @@ public class GameOutput {
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				x.frame.setVisible(true);
-				moveShip(shipLocation, x);
+				moveShip(centerLocation, x);
 				frame.dispose();
-				y.frame.setVisible(true);
 			}
 		});
 		frame.add(startButton, BorderLayout.AFTER_LAST_LINE);
@@ -350,10 +289,10 @@ public class GameOutput {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
 		
-		System.out.println("before: " + shipLocation[0] + " " + shipLocation[1]);
+		//System.out.println("before: " + shipLocation[0] + " " + shipLocation[1]);
 		shipLocation = end.clone();
-		System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
-		System.out.println("end: " + end[0] + " " + end[1]);
+		//System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
+		//System.out.println("end: " + end[0] + " " + end[1]);
 		if (end[0] == marsLocation[0] && end[1] == marsLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end[0] == plutoLocation[0] && end[1] == plutoLocation[1]) {
@@ -387,8 +326,8 @@ public class GameOutput {
 		// amount of steps from the end position
 		int steps = 1;
 
-		System.out.println("test");
-		System.out.println(shipLocation[0] + " " + shipLocation[1]);
+		//System.out.println("test");
+		//System.out.println(shipLocation[0] + " " + shipLocation[1]);
 
 		// loop stops when it reaches the current ship location
 		while (distance[shipLocation[1]][shipLocation[0]] == -1) {
@@ -425,7 +364,6 @@ public class GameOutput {
 							}
 						}
 					}
-
 				}
 			}
 			steps++;
@@ -442,11 +380,11 @@ public class GameOutput {
 		path[0][1] = shipLocation[1];
 		
 		int i = 0;
-		System.out.println("path: " + path[i][0] + " " + path[i][1]);
+		//System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		while (!Arrays.equals(path[i], end)) {
 			int x = path[i][0];
 			int y = path[i][1];
-			System.out.println(i);
+			//System.out.println(i);
 			i++;
 			if (distance[y + 1][x] == distance[y][x] - 1) {
 				path[i][0] = x;
@@ -464,10 +402,8 @@ public class GameOutput {
 				path[i][0] = x - 1;
 				path[i][1] = y;
 			}
-			System.out.println("path: " + path[i][0] + " " + path[i][1]);
+			//System.out.println("path: " + path[i][0] + " " + path[i][1]);
 		}
 		return path;
 	}
-	
-	
 }
