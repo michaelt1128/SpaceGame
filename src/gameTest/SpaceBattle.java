@@ -55,6 +55,12 @@ public class SpaceBattle
 	
 		JLabel outcome = new JLabel();
 		outcome.setFont(new Font("Serif", Font.BOLD, 30));
+		JLabel lootText = new JLabel();
+		lootText.setFont(new Font("Serif", Font.BOLD, 30));
+		JPanel outcomePanel = new JPanel();
+		outcomePanel.setLayout(new BorderLayout());
+		outcomePanel.add(outcome,BorderLayout.NORTH);
+		outcomePanel.add(lootText, BorderLayout.SOUTH);
 		
 		JLabel turnNum = new JLabel("Turn " + turnCount);
 		mainPanel.add(turnNum, BorderLayout.PAGE_START);
@@ -95,6 +101,8 @@ public class SpaceBattle
 					
 					double tempDmg = tempAttack * (tempAccuracy / 100); //takes the player's dmg and accuracy to determine how much damage it deals per turn.
 					double tempArmorNegationPercent = (double)(100/(100+tempArmor));
+					
+					int tempLoot = eStats.get(6);
 					
 					
 					if(tempShieldDurability > 0) //makes sure the shields are up
@@ -142,9 +150,11 @@ public class SpaceBattle
 					}
 					if(tempArmor<=0)
 					{
+						pStats.set(6, pStats.get(6) + tempLoot);
 						bFrame.getContentPane().removeAll();
 						outcome.setText("Enemey ship has been annihilated!");
-						bFrame.add(outcome, BorderLayout.CENTER);
+						lootText.setText("Enemy Credits acquired: " + tempLoot);
+						bFrame.add(outcomePanel, BorderLayout.CENTER);
 						buttonPanel.setVisible(false);
 						bFrame.setVisible(true);
 						hasWon = true;
@@ -254,6 +264,7 @@ public class SpaceBattle
 	    			            public void run() 
 	    			            {
 	    			                bFrame.dispose();
+	    			                new SpacePort(pStats);
 	    			            }
 	    			}
 	    			,5000);
