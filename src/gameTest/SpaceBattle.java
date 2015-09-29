@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import worldTest.WorldGen;
+import worldTest.*;
+
 public class SpaceBattle 
 {
 	public boolean hasWon = false;
@@ -16,6 +17,8 @@ public class SpaceBattle
 	public JFrame bFrame = new JFrame("Space Battle");
 	public SpaceBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{		
+		
+		
 		JPanel battleGif = new JPanel();
 		battleGif.setSize(300,300);
 		
@@ -251,27 +254,10 @@ public class SpaceBattle
 				}
 				if(hasWon == true || hasLost == true)
 				{
-					new java.util.Timer().schedule(new java.util.TimerTask() 
-	    			{
-	    			            public void run() 
-	    			            {
-	    			                
-	    			            }
-	    			}
-	    			,2000);
-	    			new java.util.Timer().schedule(new java.util.TimerTask() 
-	    			{
-	    			            public void run() 
-	    			            {
-	    			                bFrame.dispose();
-	    			                new SpacePort(pStats);
-	    			            }
-	    			}
-	    			,5000);
+					ShipTraits st = new ShipTraits();
+					st.setShipStats(pStats);
 				}
 			}
-			
-		
 		});
 		
 		fleeButton.addActionListener(new ActionListener()

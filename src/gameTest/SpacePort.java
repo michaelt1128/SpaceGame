@@ -8,6 +8,8 @@ import javax.swing.*;
 
 public class SpacePort 
 {
+
+	public JButton leaveButton = new JButton("Depart Space Port");
 	public SpacePort(ArrayList<Integer> pStats)
 	{
 		JFrame mFrame = new JFrame("Space Port");
@@ -18,7 +20,6 @@ public class SpacePort
 		
 		JButton buyArmor = new JButton("Buy Armor");
 		JButton repairShields = new JButton("Repair Ship");
-		JButton leaveButton = new JButton("Depart Space Port");
 		JButton randomButton = new JButton("???");
 		
 		JLabel repairsText = new JLabel("This is a test repair text");

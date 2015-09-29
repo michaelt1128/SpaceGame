@@ -52,11 +52,12 @@ public class GameOutput {
 	private static final int[] sunLocation = { 8, 8 };
 	private static final int[] centerLocation = { 4, 4 };
 	
+	public static WorldGen w = new WorldGen(10, 10, spc_icons);
+	
 	public static void main(String[] args) {
 
 		// Creates the universe object, w, and sets its location in the top
 		// center
-		WorldGen w = new WorldGen(10, 10, spc_icons);
 		w.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		w.frame.setLocation(dim.width / 2 - w.frame.getSize().width, 0);
@@ -83,7 +84,6 @@ public class GameOutput {
 		class marsMoveMaker extends SwingWorker<Double, Double> { 
 			@Override
 			protected Double doInBackground() throws Exception {
-				// TODO Auto-generated method stub
 				int[][] p = fancyMoveShip(marsLocation, w);
 				for(int i = 1; i<p.length; i++){
 					moveShip(p[i], w);
@@ -150,7 +150,6 @@ public class GameOutput {
 						WorldGen marsBaseMap = new WorldGen(10, 10, uranus_Icons);
 						marsBaseMap.frame.setVisible(true);
 					}
-
 				});
 			}
 		});
@@ -173,9 +172,26 @@ public class GameOutput {
 					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
 					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
 					sb.bFrame.setVisible(true);
+					if(sb.hasWon == true || sb.hasLost == true) {
+		    			new java.util.Timer().schedule(new java.util.TimerTask() 
+		    			{
+		    			            public void run() 
+		    			            {
+		    			            	ShipTraits st = new ShipTraits();
+		    			            	
+		    			                sb.bFrame.dispose();
+		    			                SpacePort s = new SpacePort(st.getShipStats());
+		    			                s.leaveButton.addActionListener(new ActionListener() {
+		    			                	public void actionPerformed(ActionEvent e) {
+		    			                		
+		    			                	}
+		    			                });
+		    			            }
+		    			}
+		    			,5000);
+					}
 				}
 			}
-
 		});
 		
 		
