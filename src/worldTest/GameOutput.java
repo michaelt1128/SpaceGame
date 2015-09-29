@@ -7,7 +7,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -53,6 +52,7 @@ public class GameOutput {
 	private static final int[] centerLocation = { 4, 4 };
 	
 	public static WorldGen w = new WorldGen(10, 10, spc_icons);
+	public static ShipTraits st = new ShipTraits();
 	
 	public static void main(String[] args) {
 
@@ -77,10 +77,9 @@ public class GameOutput {
 			}
 			@Override
 			protected void done() {
-				
+		
 			}
 		}
-		
 		class marsMoveMaker extends SwingWorker<Double, Double> { 
 			@Override
 			protected Double doInBackground() throws Exception {
@@ -135,7 +134,29 @@ public class GameOutput {
 					moveShip(p[i], w);
 					Thread.sleep(500);
 				}
-				System.exit(0);
+				return null;
+			}
+		}
+		class spaceBattleMaker extends SwingWorker<Double, Double> {
+			@Override
+			protected Double doInBackground() throws Exception {
+				SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+				sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+				sb.bFrame.setVisible(true);
+				while(sb.hasLost != true && sb.hasWon != true)
+				{
+					Thread.sleep(100);
+				}
+				Thread.sleep(1000);
+                sb.bFrame.dispose();
+                SpacePort s = new SpacePort(PlayerShip.getShipStats());
+                s.leaveButton.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+	                		new centerMoveMaker().execute();
+	                		s.mFrame.dispose();
+                	}
+                });
+				
 				return null;
 			}
 		}
@@ -154,9 +175,10 @@ public class GameOutput {
 				marsGen.frame.setTitle("Mars");
 				marsGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
 				if (Math.random() < .65) {
-					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					sb.bFrame.setVisible(true);
+					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					//sb.bFrame.setVisible(true);
+					new spaceBattleMaker().execute();
 				}
 				marsGen.setTile(3, 3, marsBase0);
 				marsGen.grid[3][3].addActionListener(new ActionListener() {
@@ -183,27 +205,11 @@ public class GameOutput {
 				uranusGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
 
 				if (Math.random() < .65) {
-					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					sb.bFrame.setVisible(true);
-					if(sb.hasWon == true || sb.hasLost == true) {
-		    			new java.util.Timer().schedule(new java.util.TimerTask() 
-		    			{
-		    			            public void run() 
-		    			            {
-		    			            	ShipTraits st = new ShipTraits();
-		    			            	
-		    			                sb.bFrame.dispose();
-		    			                SpacePort s = new SpacePort(st.getShipStats());
-		    			                s.leaveButton.addActionListener(new ActionListener() {
-		    			                	public void actionPerformed(ActionEvent e) {
-		    			                		
-		    			                	}
-		    			                });
-		    			            }
-		    			}
-		    			,5000);
-					}
+					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					//sb.bFrame.setVisible(true);
+					new spaceBattleMaker().execute();
+					
 				}
 			}
 		});
@@ -224,9 +230,10 @@ public class GameOutput {
 				plutoGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
 
 				if (Math.random() < .65) {
-					SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					sb.bFrame.setVisible(true);
+					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
+					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
+					//sb.bFrame.setVisible(true);
+					new spaceBattleMaker().execute();
 				}
 			}
 		});
@@ -273,9 +280,6 @@ public class GameOutput {
 	}
 
 	public static void setUpGame() {
-		PlayerShip pShip = new PlayerShip();
-		EnemyShip eShip = new EnemyShip();
-
 		tempP.add(0, 100);
 		tempP.add(1, 1000);
 		tempP.add(2, 100);
@@ -284,8 +288,8 @@ public class GameOutput {
 		tempP.add(5, 1000);
 		tempP.add(6, 2000);
 
-		pShip.setShipStats(tempP);
-		eShip.setShipStats(randomEnemy());
+		PlayerShip.setShipStats(tempP);
+		EnemyShip.setShipStats(randomEnemy());
 	}
 
 	public static ArrayList<Integer> randomEnemy() {
@@ -411,29 +415,6 @@ public class GameOutput {
 		path[0][1] = shipLocation[1];
 		
 		int i = 0;
-		//!Arrays.equals(path[i], end)
-		/*while ((path[i][0] != end[0]) || (path[i][1] != end[1])) {
-			
-			int x = path[i][0];
-			int y = path[i][1];
-			i++;
-			if (distance[y + 1][x] == distance[y][x] - 1) {
-				path[i][0] = x;
-				path[i][1] = y + 1;
-			} else if (distance[y - 1][x] == distance[y][x] - 1) {
-				path[i][0] = x;
-				path[i][1] = y - 1;
-			}
-			x = path[i][0];
-			y = path[i][1];
-			if (distance[y][x + 1] == distance[y][x] - 1) {
-				path[i][0] = x + 1;
-				path[i][1] = y;
-			} else if (distance[y][x - 1] == distance[y][x] - 1) {
-				path[i][0] = x - 1;
-				path[i][1] = y;
-			}
-		}*/
 		
 		while((path[i][0] != end[0]) || (path[i][1] != end[1])){
 			int x = path[i][0];

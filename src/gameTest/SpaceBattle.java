@@ -17,8 +17,6 @@ public class SpaceBattle
 	public JFrame bFrame = new JFrame("Space Battle");
 	public SpaceBattle(ArrayList<Integer> pStats,ArrayList<Integer> eStats)
 	{		
-		
-		
 		JPanel battleGif = new JPanel();
 		battleGif.setSize(300,300);
 		
@@ -155,7 +153,7 @@ public class SpaceBattle
 					{
 						pStats.set(6, pStats.get(6) + tempLoot);
 						bFrame.getContentPane().removeAll();
-						outcome.setText("Enemey ship has been annihilated!");
+						outcome.setText("Enemy ship has been annihilated!");
 						lootText.setText("Enemy Credits acquired: " + tempLoot);
 						bFrame.add(outcomePanel, BorderLayout.CENTER);
 						buttonPanel.setVisible(false);
@@ -165,7 +163,6 @@ public class SpaceBattle
 					else
 					{
 						atkText.setText("<html>Enemy Armor: " + Math.round(tempArmor) + "<br>" + "Enemy Shields: " + Math.round(shieldPercent) + "%</html>");
-						
 					}
 					textPanel.add(atkText, BorderLayout.NORTH);
 					bFrame.setVisible(true);							
@@ -249,13 +246,12 @@ public class SpaceBattle
 				}
 				else
 				{
-					System.out.println("Finished battle. You don't need to attack.");
+					System.out.println("Finished battle.");
 					
 				}
 				if(hasWon == true || hasLost == true)
 				{
-					ShipTraits st = new ShipTraits();
-					st.setShipStats(pStats);
+					PlayerShip.setShipStats(pStats);
 				}
 			}
 		});

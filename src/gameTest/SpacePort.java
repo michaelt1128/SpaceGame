@@ -11,12 +11,14 @@ import worldTest.WorldGen;
 public class SpacePort 
 {
 
+	public JFrame mFrame = new JFrame("Space Port");
 	public JButton leaveButton = new JButton("Depart Space Port");
 	public SpacePort(ArrayList<Integer> pStats)
 	{
-		JFrame mFrame = new JFrame("Space Port");
 		mFrame.setLayout(new BorderLayout());
 		mFrame.setSize(800,200);
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		mFrame.setLocation(dim.width/2 - 400, 400);
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BorderLayout());
 		JPanel buttonPanel = new JPanel();
