@@ -27,7 +27,6 @@ public class GameOutput {
 	private static final Icon mars = new ImageIcon(WorldGen.class.getResource("/images/mars.png"));
 	private static final Icon sun = new ImageIcon(WorldGen.class.getResource("/images/sun.png"));
 	private static final Icon uranus = new ImageIcon(WorldGen.class.getResource("/images/uranus.png"));
-	private static final Icon marsBase0 = new ImageIcon(WorldGen.class.getResource("/images/marsBase0.png"));
 	private static final Icon pluto = new ImageIcon(WorldGen.class.getResource("/images/pluto.png"));
 
 	// Creates the iconCreator object and all of the icon arrays used in the
@@ -154,6 +153,9 @@ public class GameOutput {
                 	public void actionPerformed(ActionEvent e) {
 	                		new centerMoveMaker().execute();
 	                		s.mFrame.dispose();
+	                		uranusGen.frame.setVisible(false);
+	                		marsGen.frame.setVisible(false);
+	                		plutoGen.frame.setVisible(false);
                 	}
                 });
 				
@@ -174,19 +176,9 @@ public class GameOutput {
 
 				marsGen.frame.setTitle("Mars");
 				marsGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
-				if (Math.random() < .65) {
-					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					//sb.bFrame.setVisible(true);
-					new spaceBattleMaker().execute();
-				}
-				marsGen.setTile(3, 3, marsBase0);
-				marsGen.grid[3][3].addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e2) {
-						WorldGen marsBaseMap = new WorldGen(10, 10, uranus_Icons);
-						marsBaseMap.frame.setVisible(true);
-					}
-				});
+				
+				new spaceBattleMaker().execute();
+				
 			}
 		});
 
@@ -195,6 +187,7 @@ public class GameOutput {
 		w.grid[uranusLocation[0]][uranusLocation[1]].setToolTipText("Uranus");
 		w.grid[uranusLocation[0]][uranusLocation[1]].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e2) {
+				
 				new uranusMoveMaker().execute();
 
 				marsGen.frame.setVisible(false);
@@ -204,13 +197,8 @@ public class GameOutput {
 				uranusGen.frame.setTitle("Uranus");
 				uranusGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
 
-				if (Math.random() < .65) {
-					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					//sb.bFrame.setVisible(true);
-					new spaceBattleMaker().execute();
-					
-				}
+				new spaceBattleMaker().execute();
+				
 			}
 		});
 		
@@ -229,12 +217,8 @@ public class GameOutput {
 				plutoGen.frame.setTitle("Pluto");
 				plutoGen.frame.setLocation(w.frame.getX() + w.frame.getWidth(), w.frame.getY());
 
-				if (Math.random() < .65) {
-					//SpaceBattle sb = new SpaceBattle(tempP, randomEnemy());
-					//sb.bFrame.setLocation(w.frame.getX(), w.frame.getHeight());
-					//sb.bFrame.setVisible(true);
-					new spaceBattleMaker().execute();
-				}
+				new spaceBattleMaker().execute();
+				
 			}
 		});
 
@@ -323,10 +307,8 @@ public class GameOutput {
 			w.resetTile(shipLocation[0], shipLocation[1], spc_icons);
 		}
 		
-		//System.out.println("before: " + shipLocation[0] + " " + shipLocation[1]);
 		shipLocation = end.clone();
-		//System.out.println("after: " + shipLocation[0] + " " + shipLocation[1]);
-		//System.out.println("end: " + end[0] + " " + end[1]);
+		
 		if (end[0] == marsLocation[0] && end[1] == marsLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end[0] == plutoLocation[0] && end[1] == plutoLocation[1]) {
@@ -340,8 +322,6 @@ public class GameOutput {
 	}
 
 	public static int[][] fancyMoveShip(int[] end, WorldGen w) {
-		// end[0] = y
-		// end[1] = x
 		int length = 10;
 		int width = 10;
 
@@ -357,9 +337,6 @@ public class GameOutput {
 
 		// amount of steps from the end position
 		int steps = 1;
-
-		//System.out.println("test");
-		//System.out.println(shipLocation[0] + " " + shipLocation[1]);
 
 		// loop stops when it reaches the current ship location
 		while (distance[shipLocation[1]][shipLocation[0]] == -1) {
