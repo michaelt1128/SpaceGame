@@ -126,6 +126,20 @@ public class GameOutput {
 			}
 			
 		}
+		class centerMoveMaker extends SwingWorker<Double, Double> {
+			
+			@Override
+			protected Double doInBackground() throws Exception {
+				int[][] p = fancyMoveShip(centerLocation, w);
+				for(int i = 1; i<p.length; i++) {
+					moveShip(p[i], w);
+					Thread.sleep(500);
+				}
+				System.exit(0);
+				return null;
+			}
+		}
+		
 		// Create the mars tile and open mars map
 		w.setTile(marsLocation[0], marsLocation[1], mars);
 		w.grid[marsLocation[0]][marsLocation[1]].setToolTipText("Mars");
@@ -156,9 +170,9 @@ public class GameOutput {
 		});
 
 		// Create the uranus tile and open uranus map
-		w.setTile(6, 3, uranus);
-		w.grid[6][3].setToolTipText("Uranus");
-		w.grid[6][3].addActionListener(new ActionListener() {
+		w.setTile(uranusLocation[0], uranusLocation[1], uranus);
+		w.grid[uranusLocation[0]][uranusLocation[1]].setToolTipText("Uranus");
+		w.grid[uranusLocation[0]][uranusLocation[1]].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e2) {
 				new uranusMoveMaker().execute();
 
@@ -180,9 +194,9 @@ public class GameOutput {
 		
 		
 		// Create the pluto tile and open map
-		w.setTile(3, 8, pluto);
-		w.grid[3][8].setToolTipText("Pluto");
-		w.grid[3][8].addActionListener(new ActionListener() {
+		w.setTile(plutoLocation[0], plutoLocation[1], pluto);
+		w.grid[plutoLocation[0]][plutoLocation[1]].setToolTipText("Pluto");
+		w.grid[plutoLocation[0]][plutoLocation[1]].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e1) {
 				new plutoMoveMaker().execute();
 
@@ -202,9 +216,9 @@ public class GameOutput {
 		});
 
 		// Create sun tile
-		w.setTile(8, 8, sun);
-		w.grid[8][8].setToolTipText("Sun");
-		w.grid[8][8].addActionListener(new ActionListener() {
+		w.setTile(sunLocation[0], sunLocation[1], sun);
+		w.grid[sunLocation[0]][sunLocation[1]].setToolTipText("Sun");
+		w.grid[sunLocation[0]][sunLocation[1]].addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new sunMoveMaker().execute();
 			}
@@ -296,12 +310,10 @@ public class GameOutput {
 		if (end[0] == marsLocation[0] && end[1] == marsLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], mars);
 		} else if (end[0] == plutoLocation[0] && end[1] == plutoLocation[1]) {
-			System.out.println("works");
 			w.makeSpaceShip(end[0], end[1], pluto);
 		} else if (end[0] == uranusLocation[0] && end[1] == uranusLocation[1]) {
 			w.makeSpaceShip(end[0], end[1], uranus);
 		} else {
-			System.out.println("space");
 			w.makeSpaceShip(end[0], end[1], w.resetTile(end[0], end[1], spc_icons));
 		}
 		return shipLocation;
@@ -374,17 +386,20 @@ public class GameOutput {
 			}
 			System.out.println();
 		}
-		int stepCount = Math.max(Math.abs(shipLocation[0] - end[0]), Math.abs(shipLocation[1] - end[1])) + 1;
+		
+		int stepCount = Math.max(Math.abs(shipLocation[0] - end[0]), Math.abs(shipLocation[1] - end[1]))+1;
+		System.out.println(stepCount);
+		
 		int[][] path = new int[stepCount][2];
 		path[0][0] = shipLocation[0];
 		path[0][1] = shipLocation[1];
 		
 		int i = 0;
-		//System.out.println("path: " + path[i][0] + " " + path[i][1]);
-		while (!Arrays.equals(path[i], end)) {
+		//!Arrays.equals(path[i], end)
+		/*while ((path[i][0] != end[0]) || (path[i][1] != end[1])) {
+			
 			int x = path[i][0];
 			int y = path[i][1];
-			//System.out.println(i);
 			i++;
 			if (distance[y + 1][x] == distance[y][x] - 1) {
 				path[i][0] = x;
@@ -402,7 +417,29 @@ public class GameOutput {
 				path[i][0] = x - 1;
 				path[i][1] = y;
 			}
-			//System.out.println("path: " + path[i][0] + " " + path[i][1]);
+		}*/
+		
+		while((path[i][0] != end[0]) || (path[i][1] != end[1])){
+			int x = path[i][0];
+			int y = path[i][1];
+			i++;
+			if (distance[y+1][x] == distance[y][x] - 1) {
+				y++;
+			} else if (distance[y-1][x] == distance[y][x] - 1) {
+				y--;
+			} 
+			if (distance[y][x+1] == distance[y][x] - 1) {
+				x++;
+			} else if (distance[y][x-1] == distance[y][x] - 1) {
+				x--; 
+			}
+			path[i][0] = x;
+			path[i][1] = y;
+		}
+		
+		
+		for(int z = 0; z<path.length; z++){
+			System.out.println(path[z][0] + " " + path[z][1]);
 		}
 		return path;
 	}
